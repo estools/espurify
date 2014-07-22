@@ -2,24 +2,46 @@
   "name": "espurify",
   "version": "0.0.1",
   "description": "Eliminate extra properties from AST output",
-  "main": "index.js",
-  "scripts": {
-    "jshint": "jshint index.js",
-    "test": "./node_modules/.bin/mocha test"
-  },
   "keywords": [
     "esprima",
     "ecmascript",
     "ast"
   ],
-  "author": "Takuto Wada <takuto.wada@gmail.com>",
-  "license": "MIT",
+  "main": "index.js",
+  "files": [
+    "README.md",
+    "index.js",
+    "package.json",
+    "test"
+  ],
+  "scripts": {
+    "build": "browserify index.js --standalone espurify > ./build/espurify.js",
+    "jshint": "jshint index.js",
+    "test": "./node_modules/.bin/mocha test"
+  },
   "dependencies": {
-    "traverse": "^0.6.6"
+    "traverse": "~0.6.6"
   },
   "devDependencies": {
-    "esprima": "^1.2.2",
-    "estraverse": "^1.5.1",
-    "mocha": "^1.20.1"
-  }
+    "esprima": "~1.2.2",
+    "estraverse": "~1.5.1",
+    "mocha": "~1.20.1"
+  },
+  "author": {
+    "name": "Takuto Wada",
+    "email": "takuto.wada@gmail.com",
+    "url": "https://github.com/twada"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/twada/espurify.git"
+  },
+  "homepage": "https://github.com/twada/espurify",
+  "bugs": "https://github.com/twada/espurify/issues",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://twada.mit-license.org/"
+    }
+  ]
 }
