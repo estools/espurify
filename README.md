@@ -13,88 +13,114 @@ EXAMPLE
 ---------------------------------------
 
 ```javascript
-var espurify = require('espurify'),
+var espurify = require('./index'),
+    estraverse = require('estraverse'),
     esprima = require('esprima'),
+    syntax = estraverse.Syntax,
     assert = require('assert');
 
 var jsCode = 'assert("foo")';
-var ast = esprima.parse(jsCode, {tolerant: true, loc: true});
+
+// Adding extra informations to AST
+var ast = esprima.parse(jsCode, {tolerant: true, loc: true, raw: true});
+estraverse.replace(ast, {
+    leave: function (currentNode, parentNode) {
+        if (currentNode.type === syntax.Literal && typeof currentNode.raw !== 'undefined') {
+            currentNode['x-verbatim-bar'] = {
+                content : currentNode.raw,
+                precedence : 18  // escodegen.Precedence.Primary
+            };
+            return currentNode;
+        } else {
+            return undefined;
+        }
+    }
+});
+
+
+// purify AST
 var purified = espurify(ast);
 
-// original AST
+
+// original AST is not modified
 assert.deepEqual(ast, {
-    type: 'Program',
-    body: [
-        {
-            type: 'ExpressionStatement',
-            expression: {
-                type: 'CallExpression',
-                callee: {
-                    type: 'Identifier',
-                    name: 'assert',
-                    loc: {
-                        start: {
-                            line: 1,
-                            column: 0
-                        },
-                        end: {
-                            line: 1,
-                            column: 6
-                        }
-                    }
-                },
-                arguments: [
-                    {
-                        type: 'Literal',
-                        value: 'foo',
-                        raw: '"foo"',
-                        loc: {
-                            start: {
-                                line: 1,
-                                column: 7
-                            },
-                            end: {
-                                line: 1,
-                                column: 12
-                            }
-                        }
-                    }
-                ],
-                loc: {
-                    start: {
-                        line: 1,
-                        column: 0
-                    },
-                    end: {
-                        line: 1,
-                        column: 13
-                    }
-                }
+  type: 'Program',
+  body: [
+    {
+      type: 'ExpressionStatement',
+      expression: {
+        type: 'CallExpression',
+        callee: {
+          type: 'Identifier',
+          name: 'assert',
+          loc: {
+            start: {
+              line: 1,
+              column: 0
             },
-            loc: {
-                start: {
-                    line: 1,
-                    column: 0
-                },
-                end: {
-                    line: 1,
-                    column: 13
-                }
+            end: {
+              line: 1,
+              column: 6
             }
-        }
-    ],
-    loc: {
-        start: {
+          }
+        },
+        arguments: [
+          {
+            type: 'Literal',
+            value: 'foo',
+            raw: '"foo"',
+            loc: {
+              start: {
+                line: 1,
+                column: 7
+              },
+              end: {
+                line: 1,
+                column: 12
+              }
+            },
+            "x-verbatim-bar": {
+              content: '"foo"',
+              precedence: 18
+            }
+          }
+        ],
+        loc: {
+          start: {
             line: 1,
             column: 0
-        },
-        end: {
+          },
+          end: {
             line: 1,
             column: 13
+          }
         }
+      },
+      loc: {
+        start: {
+          line: 1,
+          column: 0
+        },
+        end: {
+          line: 1,
+          column: 13
+        }
+      }
+    }
+  ],
+  loc: {
+    start: {
+      line: 1,
+      column: 0
     },
-    errors: []
+    end: {
+      line: 1,
+      column: 13
+    }
+  },
+  errors: []
 });
+
 
 // Extra properties eliminated from AST output
 assert.deepEqual(purified, {
