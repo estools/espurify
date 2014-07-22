@@ -84,6 +84,57 @@ describe('eliminate extra properties from AST output', function () {
 
 
 
+    it('eliminate range', function () {
+        var ast = esprima.parse('assert("foo")', {tolerant: true, range: true});
+        var purified = espurify(ast);
+        assert.deepEqual(ast, {
+            type: 'Program',
+            body: [
+                {
+                    type: 'ExpressionStatement',
+                    expression: {
+                        type: 'CallExpression',
+                        callee: {
+                            type: 'Identifier',
+                            name: 'assert',
+                            range: [
+                                0,
+                                6
+                            ]
+                        },
+                        arguments: [
+                            {
+                                type: 'Literal',
+                                value: 'foo',
+                                raw: '"foo"',
+                                range: [
+                                    7,
+                                    12
+                                ]
+                            }
+                        ],
+                        range: [
+                            0,
+                            13
+                        ]
+                    },
+                    range: [
+                        0,
+                        13
+                    ]
+                }
+            ],
+            range: [
+                0,
+                13
+            ],
+            errors: []
+        });
+        assert.deepEqual(purified, this.expected);
+    });
+
+
+
     it('eliminate loc', function () {
         var ast = esprima.parse('assert("foo")', {tolerant: true, loc: true});
         var purified = espurify(ast);
