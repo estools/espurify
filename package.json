@@ -4,6 +4,7 @@
   "description": "Eliminate extra properties from AST output",
   "main": "index.js",
   "scripts": {
+    "jshint": "jshint index.js",
     "test": "./node_modules/.bin/mocha test"
   },
   "keywords": [
