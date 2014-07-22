@@ -1,0 +1,23 @@
+{
+  "name": "espurify",
+  "version": "0.0.1",
+  "description": "Eliminate extra properties from AST output",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha test"
+  },
+  "keywords": [
+    "esprima",
+    "ecmascript",
+    "ast"
+  ],
+  "author": "Takuto Wada <takuto.wada@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "traverse": "^0.6.6"
+  },
+  "devDependencies": {
+    "esprima": "^1.2.2",
+    "mocha": "^1.20.1"
+  }
+}
