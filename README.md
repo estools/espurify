@@ -3,6 +3,11 @@ espurify
 
 Eliminate extra properties from AST output
 
+[![Build Status](https://travis-ci.org/twada/espurify.svg?branch=master)](https://travis-ci.org/twada/espurify)
+[![NPM version](https://badge.fury.io/js/espurify.svg)](http://badge.fury.io/js/espurify)
+[![Dependency Status](https://gemnasium.com/twada/espurify.svg)](https://gemnasium.com/twada/espurify)
+[![License](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://twada.mit-license.org/)
+
 
 EXAMPLE
 ---------------------------------------
