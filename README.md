@@ -13,7 +13,7 @@ EXAMPLE
 ---------------------------------------
 
 ```javascript
-var espurify = require('./index'),
+var espurify = require('espurify'),
     estraverse = require('estraverse'),
     esprima = require('esprima'),
     syntax = estraverse.Syntax,
