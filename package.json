@@ -11,6 +11,7 @@
   "files": [
     "README.md",
     "index.js",
+    "lib",
     "package.json",
     "test"
   ],
