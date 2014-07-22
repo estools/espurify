@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "esprima": "^1.2.2",
+    "estraverse": "^1.5.1",
     "mocha": "^1.20.1"
   }
 }

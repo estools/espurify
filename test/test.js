@@ -1,8 +1,12 @@
 var espurify = require('..'),
     esprima = require('esprima'),
+    estraverse = require('estraverse'),
+    syntax = estraverse.Syntax,
     assert = require('assert');
 
+
 describe('eliminate extra properties from AST output', function () {
+
     beforeEach(function () {
         this.expected = {
             type: 'Program',
@@ -17,8 +21,8 @@ describe('eliminate extra properties from AST output', function () {
                         },
                         arguments: [
                             {
-                                type: 'Identifier',
-                                name: 'foo'
+                                type: 'Literal',
+                                value: 'foo'
                             }
                         ]
                     }
@@ -27,8 +31,10 @@ describe('eliminate extra properties from AST output', function () {
         };
     });
 
-    it('eliminate tokens', function () {
-        var ast = esprima.parse('assert(foo)', {tolerant: true, tokens: true});
+
+
+    it('eliminate tokens and raw', function () {
+        var ast = esprima.parse('assert("foo")', {tolerant: true, tokens: true, raw: true});
         var purified = espurify(ast);
 
         assert.deepEqual(ast, {
@@ -44,8 +50,9 @@ describe('eliminate extra properties from AST output', function () {
                         },
                         arguments: [
                             {
-                                type: 'Identifier',
-                                name: 'foo'
+                                type: 'Literal',
+                                value: 'foo',
+                                raw: '"foo"'
                             }
                         ]
                     }
@@ -61,8 +68,8 @@ describe('eliminate extra properties from AST output', function () {
                     value: '('
                 },
                 {
-                    type: 'Identifier',
-                    value: 'foo'
+                    type: 'String',
+                    value: '"foo"'
                 },
                 {
                     type: 'Punctuator',
@@ -75,9 +82,12 @@ describe('eliminate extra properties from AST output', function () {
         assert.deepEqual(purified, this.expected);
     });
 
+
+
     it('eliminate loc', function () {
-        var ast = esprima.parse('assert(foo)', {tolerant: true, loc: true});
+        var ast = esprima.parse('assert("foo")', {tolerant: true, loc: true});
         var purified = espurify(ast);
+
         assert.deepEqual(ast, {
             type: 'Program',
             body: [
@@ -101,8 +111,9 @@ describe('eliminate extra properties from AST output', function () {
                         },
                         arguments: [
                             {
-                                type: 'Identifier',
-                                name: 'foo',
+                                type: 'Literal',
+                                value: 'foo',
+                                raw: '"foo"',
                                 loc: {
                                     start: {
                                         line: 1,
@@ -110,7 +121,7 @@ describe('eliminate extra properties from AST output', function () {
                                     },
                                     end: {
                                         line: 1,
-                                        column: 10
+                                        column: 12
                                     }
                                 }
                             }
@@ -122,7 +133,7 @@ describe('eliminate extra properties from AST output', function () {
                             },
                             end: {
                                 line: 1,
-                                column: 11
+                                column: 13
                             }
                         }
                     },
@@ -133,7 +144,7 @@ describe('eliminate extra properties from AST output', function () {
                         },
                         end: {
                             line: 1,
-                            column: 11
+                            column: 13
                         }
                     }
                 }
@@ -145,9 +156,59 @@ describe('eliminate extra properties from AST output', function () {
                 },
                 end: {
                     line: 1,
-                    column: 11
+                    column: 13
                 }
             },
+            errors: []
+        });
+
+        assert.deepEqual(purified, this.expected);
+    });
+
+
+
+    it('eliminate custom property', function () {
+        var ast = esprima.parse('assert("foo")', {tolerant: true, raw: true});
+        estraverse.replace(ast, {
+            leave: function (currentNode, parentNode) {
+                if (currentNode.type === syntax.Literal && typeof currentNode.raw !== 'undefined') {
+                    currentNode['x-verbatim-bar'] = {
+                        content : currentNode.raw,
+                        precedence : 18  // escodegen.Precedence.Primary
+                    };
+                    return currentNode;
+                } else {
+                    return undefined;
+                }
+            }
+        });
+        var purified = espurify(ast);
+
+        assert.deepEqual(ast, {
+            type: 'Program',
+            body: [
+                {
+                    type: 'ExpressionStatement',
+                    expression: {
+                        type: 'CallExpression',
+                        callee: {
+                            type: 'Identifier',
+                            name: 'assert'
+                        },
+                        arguments: [
+                            {
+                                type: 'Literal',
+                                value: 'foo',
+                                raw: '"foo"',
+                                "x-verbatim-bar": {
+                                    content: '"foo"',
+                                    precedence: 18
+                                }
+                            }
+                        ]
+                    }
+                }
+            ],
             errors: []
         });
 
