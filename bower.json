@@ -1,0 +1,29 @@
+{
+  "name": "espurify",
+  "description": "Eliminate extra properties from AST output",
+  "main": "build/espurify.js",
+  "license": "http://twada.mit-license.org/",
+  "ignore": [
+    "**/.*",
+    "index.js",
+    "package.json",
+    "test"
+  ],
+  "keywords": [
+    "esprima",
+    "ecmascript",
+    "ast"
+  ],
+  "authors": [
+    {
+      "name": "Takuto Wada",
+      "email": "takuto.wada@gmail.com",
+      "homepage": "https://github.com/twada"
+    }
+  ],
+  "homepage": "https://github.com/twada/espurify",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/twada/espurify.git"
+  }
+}
