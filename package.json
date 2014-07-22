@@ -1,6 +1,6 @@
 {
   "name": "espurify",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Eliminate extra properties from AST output",
   "keywords": [
     "esprima",
