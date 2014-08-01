@@ -1,5 +1,5 @@
 /**
- * espurify - Eliminate extra properties from AST output
+ * espurify - Clone new AST without extra properties
  * 
  * https://github.com/twada/espurify
  *

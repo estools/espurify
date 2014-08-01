@@ -1,7 +1,7 @@
 {
   "name": "espurify",
   "version": "0.1.2",
-  "description": "Eliminate extra properties from AST output",
+  "description": "Clone new AST without extra properties",
   "keywords": [
     "esprima",
     "ecmascript",

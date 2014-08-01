@@ -1,6 +1,6 @@
 {
   "name": "espurify",
-  "description": "Eliminate extra properties from AST output",
+  "description": "Clone new AST without extra properties",
   "main": "build/espurify.js",
   "license": "http://twada.mit-license.org/",
   "ignore": [

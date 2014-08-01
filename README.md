@@ -1,12 +1,22 @@
 espurify
 ================================
 
-Eliminate extra properties from AST output
+Clone new AST without extra properties
 
 [![Build Status](https://travis-ci.org/twada/espurify.svg?branch=master)](https://travis-ci.org/twada/espurify)
 [![NPM version](https://badge.fury.io/js/espurify.svg)](http://badge.fury.io/js/espurify)
 [![Dependency Status](https://gemnasium.com/twada/espurify.svg)](https://gemnasium.com/twada/espurify)
 [![License](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://twada.mit-license.org/)
+
+
+API
+---------------------------------------
+
+### var purifiedCloneAst = espurify(originalAst)
+
+Returns new clone of `originalAst` but without extra properties.
+
+Leave properties defined in [Mozilla JavaScript AST spec](https://developer.mozilla.org/en-US/docs/SpiderMonkey/Parser_API) only (Note: location informations are eliminated too).
 
 
 EXAMPLE
@@ -22,8 +32,8 @@ var espurify = require('espurify'),
 var jsCode = 'assert("foo")';
 
 // Adding extra informations to AST
-var ast = esprima.parse(jsCode, {tolerant: true, loc: true, raw: true});
-estraverse.replace(ast, {
+var originalAst = esprima.parse(jsCode, {tolerant: true, loc: true, raw: true});
+estraverse.replace(originalAst, {
     leave: function (currentNode, parentNode) {
         if (currentNode.type === syntax.Literal && typeof currentNode.raw !== 'undefined') {
             currentNode['x-verbatim-bar'] = {
@@ -39,11 +49,11 @@ estraverse.replace(ast, {
 
 
 // purify AST
-var purified = espurify(ast);
+var purifiedClone = espurify(originalAst);
 
 
 // original AST is not modified
-assert.deepEqual(ast, {
+assert.deepEqual(originalAst, {
   type: 'Program',
   body: [
     {
@@ -122,8 +132,8 @@ assert.deepEqual(ast, {
 });
 
 
-// Extra properties eliminated from AST output
-assert.deepEqual(purified, {
+// Extra properties are eliminated from cloned AST
+assert.deepEqual(purifiedClone, {
     type: 'Program',
     body: [
         {
