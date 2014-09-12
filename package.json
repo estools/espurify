@@ -17,8 +17,8 @@
   ],
   "scripts": {
     "build": "browserify index.js --standalone espurify | derequire > ./build/espurify.js",
-    "jshint": "jshint index.js",
-    "test": "./node_modules/.bin/mocha test"
+    "lint": "jshint index.js",
+    "test": "mocha test"
   },
   "dependencies": {
     "traverse": "~0.6.6"
@@ -26,7 +26,7 @@
   "devDependencies": {
     "esprima": "~1.2.2",
     "estraverse": "~1.5.1",
-    "mocha": "~1.21.3"
+    "mocha": "~1.21.4"
   },
   "author": {
     "name": "Takuto Wada",
