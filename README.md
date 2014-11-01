@@ -12,7 +12,7 @@ Clone new AST without extra properties
 API
 ---------------------------------------
 
-### var purifiedCloneAst = espurify(originalAst)
+### var purifiedAstClone = espurify(originalAst)
 
 Returns new clone of `originalAst` but without extra properties.
 
