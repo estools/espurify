@@ -3,9 +3,9 @@ espurify
 
 Clone new AST without extra properties
 
-[![Build Status](https://travis-ci.org/twada/espurify.svg?branch=master)](https://travis-ci.org/twada/espurify)
+[![Build Status](https://travis-ci.org/estools/espurify.svg?branch=master)](https://travis-ci.org/estools/espurify)
 [![NPM version](https://badge.fury.io/js/espurify.svg)](http://badge.fury.io/js/espurify)
-[![Dependency Status](https://gemnasium.com/twada/espurify.svg)](https://gemnasium.com/twada/espurify)
+[![Dependency Status](https://gemnasium.com/estools/espurify.svg)](https://gemnasium.com/estools/espurify)
 [![License](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://twada.mit-license.org/)
 
 
