@@ -1,3 +1,9 @@
+### Moved repository to estools (2014-11-24)
+
+
+Moved repository from twada/espurify to estools/espurify.
+
+
 ### [1.0.0](https://github.com/twada/espurify/releases/tag/v1.0.0) (2014-11-01)
 
 

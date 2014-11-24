@@ -21,9 +21,9 @@
       "homepage": "https://github.com/twada"
     }
   ],
-  "homepage": "https://github.com/twada/espurify",
+  "homepage": "https://github.com/estools/espurify",
   "repository": {
     "type": "git",
-    "url": "git://github.com/twada/espurify.git"
+    "url": "git://github.com/estools/espurify.git"
   }
 }

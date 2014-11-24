@@ -7,7 +7,7 @@
     "email": "takuto.wada@gmail.com",
     "url": "https://github.com/twada"
   },
-  "bugs": "https://github.com/twada/espurify/issues",
+  "bugs": "https://github.com/estools/espurify/issues",
   "dependencies": {
     "traverse": "~0.6.6"
   },
@@ -23,7 +23,7 @@
     "package.json",
     "test"
   ],
-  "homepage": "https://github.com/twada/espurify",
+  "homepage": "https://github.com/estools/espurify",
   "keywords": [
     "esprima",
     "ecmascript",
@@ -36,7 +36,7 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/twada/espurify.git"
+    "url": "git://github.com/estools/espurify.git"
   },
   "scripts": {
     "build": "browserify index.js --standalone espurify | derequire > ./build/espurify.js",
