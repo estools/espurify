@@ -2,11 +2,11 @@
 /**
  * espurify - Clone new AST without extra properties
  * 
- * https://github.com/twada/espurify
+ * https://github.com/estools/espurify
  *
  * Copyright (c) 2014 Takuto Wada
  * Licensed under the MIT license.
- *   http://twada.mit-license.org/
+ *   https://github.com/estools/espurify/blob/master/MIT-LICENSE.txt
  */
 'use strict';
 
