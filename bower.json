@@ -2,7 +2,7 @@
   "name": "espurify",
   "description": "Clone new AST without extra properties",
   "main": "build/espurify.js",
-  "license": "http://twada.mit-license.org/",
+  "license": "MIT",
   "ignore": [
     "**/.*",
     "index.js",

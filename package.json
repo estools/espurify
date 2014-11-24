@@ -17,6 +17,8 @@
     "mocha": "~2.0.1"
   },
   "files": [
+    "CHANGELOG.md",
+    "MIT-LICENSE.txt",
     "README.md",
     "index.js",
     "lib",
@@ -31,7 +33,7 @@
   ],
   "license": {
     "type": "MIT",
-    "url": "http://twada.mit-license.org/"
+    "url": "https://github.com/estools/espurify/blob/master/MIT-LICENSE.txt"
   },
   "main": "index.js",
   "repository": {
