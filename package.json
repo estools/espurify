@@ -43,6 +43,6 @@
   "scripts": {
     "build": "browserify index.js --standalone espurify | dereserve | derequire > ./build/espurify.js",
     "lint": "jshint index.js",
-    "test": "mocha test"
+    "test": "npm run lint && mocha test"
   }
 }
