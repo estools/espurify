@@ -24,14 +24,15 @@
     "README.md",
     "index.js",
     "lib",
+    "build/espurify.js",
     "package.json",
     "test"
   ],
   "homepage": "https://github.com/estools/espurify",
   "keywords": [
-    "esprima",
+    "ast",
     "ecmascript",
-    "ast"
+    "esprima"
   ],
   "license": {
     "type": "MIT",
