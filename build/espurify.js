@@ -1,4 +1,4 @@
-!function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.espurify=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw (f.code="MODULE_NOT_FOUND", f)}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.espurify = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw (f.code="MODULE_NOT_FOUND", f)}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
 /**
  * espurify - Clone new AST without extra properties
  * 
@@ -11,6 +11,7 @@
 'use strict';
 
 var traverse = _dereq_('traverse'),
+    indexOf = _dereq_('indexof'),
     deepCopy = _dereq_('./lib/ast-deepcopy'),
     astProps = _dereq_('./lib/ast-properties'),
     hasOwn = Object.prototype.hasOwnProperty;
@@ -35,12 +36,12 @@ function isSupportedNodeType (type) {
 }
 
 function isSupportedKey (type, key) {
-    return astProps[type].indexOf(key) !== -1;
+    return indexOf(astProps[type], key) !== -1;
 }
 
 module.exports = espurify;
 
-},{"./lib/ast-deepcopy":2,"./lib/ast-properties":3,"traverse":4}],2:[function(_dereq_,module,exports){
+},{"./lib/ast-deepcopy":2,"./lib/ast-properties":3,"indexof":4,"traverse":5}],2:[function(_dereq_,module,exports){
 /**
  * Copyright (C) 2012 Yusuke Suzuki (twitter: @Constellation) and other contributors.
  * Released under the BSD license.
@@ -133,6 +134,17 @@ module.exports = {
 };
 
 },{}],4:[function(_dereq_,module,exports){
+
+var indexOf = [].indexOf;
+
+module.exports = function(arr, obj){
+  if (indexOf) return arr.indexOf(obj);
+  for (var i = 0; i < arr.length; ++i) {
+    if (arr[i] === obj) return i;
+  }
+  return -1;
+};
+},{}],5:[function(_dereq_,module,exports){
 var traverse = module.exports = function (obj) {
     return new Traverse(obj);
 };
