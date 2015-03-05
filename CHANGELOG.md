@@ -1,3 +1,10 @@
+### [1.0.1](https://github.com/twada/espurify/releases/tag/v1.0.1) (2015-03-06)
+
+
+* replace Array#indexOf with [indexof module](https://www.npmjs.com/package/indexof) to deal with older browsers ([4ba0bd51](https://github.com/estools/espurify/commit/4ba0bd5155ad657e4beb3338dfcd79e443e40d10))
+* ship browser build with npm module too ([47e0cc85](https://github.com/estools/espurify/commit/47e0cc85a5d5b92b281ed80216d6908bed591515))
+
+
 ### Moved repository to estools (2014-11-24)
 
 
