@@ -9,6 +9,7 @@
   },
   "bugs": "https://github.com/estools/espurify/issues",
   "dependencies": {
+    "indexof": "0.0.1",
     "traverse": "~0.6.6"
   },
   "devDependencies": {

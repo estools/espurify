@@ -10,6 +10,7 @@
 'use strict';
 
 var traverse = require('traverse'),
+    indexOf = require('indexof'),
     deepCopy = require('./lib/ast-deepcopy'),
     astProps = require('./lib/ast-properties'),
     hasOwn = Object.prototype.hasOwnProperty;
@@ -34,7 +35,7 @@ function isSupportedNodeType (type) {
 }
 
 function isSupportedKey (type, key) {
-    return astProps[type].indexOf(key) !== -1;
+    return indexOf(astProps[type], key) !== -1;
 }
 
 module.exports = espurify;
