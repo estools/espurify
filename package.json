@@ -31,7 +31,9 @@
   "homepage": "https://github.com/estools/espurify",
   "keywords": [
     "ast",
+    "estree",
     "ecmascript",
+    "es6",
     "esprima"
   ],
   "license": {

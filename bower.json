@@ -10,9 +10,11 @@
     "test"
   ],
   "keywords": [
-    "esprima",
+    "ast",
+    "estree",
     "ecmascript",
-    "ast"
+    "es6",
+    "esprima"
   ],
   "authors": [
     {
