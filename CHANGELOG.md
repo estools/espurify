@@ -1,4 +1,17 @@
-### [1.0.1](https://github.com/twada/espurify/releases/tag/v1.0.1) (2015-03-06)
+## [1.1.0](https://github.com/estools/espurify/releases/tag/v1.1.0) (2015-04-12)
+
+
+#### Features
+
+* switch to The ESTree Spec to support ES6 ([b9ca486e](https://github.com/estools/espurify/commit/b9ca486ed94f149e1f957ff7890899f171add03b))
+
+
+#### Bug Fixes
+
+* avoid cloning private (maybe recursive) props ([501b12bf](https://github.com/estools/espurify/commit/501b12bf86816ded4f5183a075a9d08da0ef22bf))
+
+
+### [1.0.1](https://github.com/estools/espurify/releases/tag/v1.0.1) (2015-03-06)
 
 
 * replace Array#indexOf with [indexof module](https://www.npmjs.com/package/indexof) to deal with older browsers ([4ba0bd51](https://github.com/estools/espurify/commit/4ba0bd5155ad657e4beb3338dfcd79e443e40d10))
@@ -11,22 +24,22 @@
 Moved repository from twada/espurify to estools/espurify.
 
 
-### [1.0.0](https://github.com/twada/espurify/releases/tag/v1.0.0) (2014-11-01)
+### [1.0.0](https://github.com/estools/espurify/releases/tag/v1.0.0) (2014-11-01)
 
 
 The first stable release.
 
 
-### [0.1.3](https://github.com/twada/espurify/releases/tag/v0.1.3) (2014-08-01)
+### [0.1.3](https://github.com/estools/espurify/releases/tag/v0.1.3) (2014-08-01)
 
 
-### [0.1.2](https://github.com/twada/espurify/releases/tag/v0.1.2) (2014-07-22)
+### [0.1.2](https://github.com/estools/espurify/releases/tag/v0.1.2) (2014-07-22)
 
 
-### [0.1.1](https://github.com/twada/espurify/releases/tag/v0.1.1) (2014-07-22)
+### [0.1.1](https://github.com/estools/espurify/releases/tag/v0.1.1) (2014-07-22)
 
 
-### [0.1.0](https://github.com/twada/espurify/releases/tag/v0.1.0) (2014-07-22)
+### [0.1.0](https://github.com/estools/espurify/releases/tag/v0.1.0) (2014-07-22)
 
 
 The first release.
