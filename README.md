@@ -15,9 +15,9 @@ API
 
 Returns new clone of `originalAst` but without extra properties.
 
-Leave properties defined in [The ESTree Spec](https://github.com/estree/estree) (formerly known as [Mozilla SpiderMonkey Parser API](https://developer.mozilla.org/en-US/docs/SpiderMonkey/Parser_API)) only. (Note: location informations are eliminated too).
+Leaves properties defined in [The ESTree Spec](https://github.com/estree/estree) (formerly known as [Mozilla SpiderMonkey Parser API](https://developer.mozilla.org/en-US/docs/SpiderMonkey/Parser_API)) only. Also note that location informations (such as `loc` and `range`) are eliminated too.
 
-Supports [ES5](https://github.com/estree/estree/blob/master/spec.md) and [ES6](https://github.com/estree/estree/blob/master/es6.md) properties.
+`espurify` supports [ES5](https://github.com/estree/estree/blob/master/spec.md) and [ES6](https://github.com/estree/estree/blob/master/es6.md) properties.
 
 
 EXAMPLE
