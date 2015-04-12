@@ -267,3 +267,92 @@ describe('eliminate extra properties from AST output', function () {
     });
 
 });
+
+
+it('RexExpLiteral', function () {
+    var ast = esprima.parse('var re = /^foo$/im', {tolerant: true, tokens: true, range: true, raw: true});
+    var expected = {
+        type: 'Program',
+        body: [
+            {
+                type: 'VariableDeclaration',
+                declarations: [
+                    {
+                        type: 'VariableDeclarator',
+                        id: {
+                            type: 'Identifier',
+                            name: 're'
+                        },
+                        init: {
+                            type: 'Literal',
+                            value: {},
+                            regex: {
+                                pattern: '^foo$',
+                                flags: 'im'
+                            }
+                        }
+                    }
+                ],
+                kind: 'var'
+            }
+        ]
+    };
+    var purified = espurify(ast);
+    assert.deepEqual(purified, expected);
+});
+
+
+it('ES6 features', function () {
+    var ast = esprima.parse('evens.map(v => v + 1);', {tolerant: true, tokens: true, range: true, raw: true});
+    var expected = {
+        type: 'Program',
+        body: [
+            {
+                type: 'ExpressionStatement',
+                expression: {
+                    type: 'CallExpression',
+                    callee: {
+                        type: 'MemberExpression',
+                        computed: false,
+                        object: {
+                            type: 'Identifier',
+                            name: 'evens'
+                        },
+                        property: {
+                            type: 'Identifier',
+                            name: 'map'
+                        }
+                    },
+                    arguments: [
+                        {
+                            type: 'ArrowFunctionExpression',
+                            id: null,
+                            params: [
+                                {
+                                    type: 'Identifier',
+                                    name: 'v'
+                                }
+                            ],
+                            body: {
+                                type: 'BinaryExpression',
+                                operator: '+',
+                                left: {
+                                    type: 'Identifier',
+                                    name: 'v'
+                                },
+                                right: {
+                                    type: 'Literal',
+                                    value: 1
+                                }
+                            },
+                            generator: false,
+                            expression: true
+                        }
+                    ]
+                }
+            }
+        ]
+    };
+    var purified = espurify(ast);
+    assert.deepEqual(purified, expected);
+});
