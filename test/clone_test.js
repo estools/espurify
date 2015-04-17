@@ -2,12 +2,13 @@ var espurify = require('..'),
     esprima = require('esprima'),
     assert = require('assert');
 
-describe('espurify.clone', function () {
+describe('espurify.customize', function () {
     var ast = esprima.parse('assert("foo")', {tolerant: true, tokens: true, loc: true, range: true, raw: true});
 
 
     it('default', function () {
-        var purified = espurify.clone(ast);
+        var clone = espurify.customize();
+        var purified = clone(ast);
         assert.deepEqual(purified, {
             type: 'Program',
             body: [
@@ -33,7 +34,8 @@ describe('espurify.clone', function () {
 
 
     it('raw', function () {
-        var purified = espurify.clone(ast, {extra: ['raw']});
+        var clone = espurify.customize({extra: ['raw']});
+        var purified = clone(ast);
         assert.deepEqual(purified, {
             type: 'Program',
             body: [
@@ -60,7 +62,8 @@ describe('espurify.clone', function () {
 
 
     it('loc', function () {
-        var purified = espurify.clone(ast, {extra: ['loc']});
+        var clone = espurify.customize({extra: ['loc']});
+        var purified = clone(ast);
         assert.deepEqual(purified, {
             type: 'Program',
             body: [
@@ -137,7 +140,8 @@ describe('espurify.clone', function () {
 
 
     it('range', function () {
-        var purified = espurify.clone(ast, {extra: ['range']});
+        var clone = espurify.customize({extra: ['range']});
+        var purified = clone(ast);
         assert.deepEqual(purified, {
             type: 'Program',
             body: [
@@ -183,7 +187,8 @@ describe('espurify.clone', function () {
 
 
     it('loc, range, raw', function () {
-        var purified = espurify.clone(ast, {extra: ['loc', 'range', 'raw']});
+        var clone = espurify.customize({extra: ['loc', 'range', 'raw']});
+        var purified = clone(ast);
         var expected = {
             type: 'Program',
             body: [
