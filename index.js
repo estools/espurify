@@ -9,33 +9,13 @@
  */
 'use strict';
 
-var traverse = require('traverse'),
-    indexOf = require('indexof'),
-    deepCopy = require('./lib/ast-deepcopy'),
-    astProps = require('./lib/ast-properties'),
-    hasOwn = Object.prototype.hasOwnProperty;
+var createWhitelist = require('./lib/create-whitelist');
+var cloneWithWhitelist = require('./lib/clone-ast');
 
-function espurify (node) {
-    var result = deepCopy(node);
-    traverse(result).forEach(function (x) {
-        if (this.parent &&
-            this.parent.node &&
-            this.parent.node.type &&
-            isSupportedNodeType(this.parent.node.type) &&
-            !isSupportedKey(this.parent.node.type, this.key))
-        {
-            this.remove(true);
-        }
-    });
-    return result;
+function createCloneFunction (options) {
+    return cloneWithWhitelist(createWhitelist(options));
 }
 
-function isSupportedNodeType (type) {
-    return hasOwn.call(astProps, type);
-}
-
-function isSupportedKey (type, key) {
-    return indexOf(astProps[type], key) !== -1;
-}
-
+var espurify = createCloneFunction();
+espurify.customize = createCloneFunction;
 module.exports = espurify;
