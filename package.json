@@ -9,7 +9,9 @@
   },
   "bugs": "https://github.com/estools/espurify/issues",
   "dependencies": {
-    "isarray": "0.0.1"
+    "isarray": "^0.0.1",
+    "object-keys": "^1.0.3",
+    "xtend": "^4.0.0"
   },
   "devDependencies": {
     "esprima": "^2.1.0",
@@ -32,8 +34,7 @@
     "ast",
     "estree",
     "ecmascript",
-    "es6",
-    "esprima"
+    "es6"
   ],
   "license": {
     "type": "MIT",
