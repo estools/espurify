@@ -15,9 +15,38 @@ API
 
 Returns new clone of `originalAst` but without extra properties.
 
-Leaves properties defined in [The ESTree Spec](https://github.com/estree/estree) (formerly known as [Mozilla SpiderMonkey Parser API](https://developer.mozilla.org/en-US/docs/SpiderMonkey/Parser_API)) only. Also note that location informations (such as `loc` and `range`) are eliminated too.
+Leaves properties defined in [The ESTree Spec](https://github.com/estree/estree) (formerly known as [Mozilla SpiderMonkey Parser API](https://developer.mozilla.org/en-US/docs/SpiderMonkey/Parser_API)) only. Also note that extra informations (such as `loc`, `range` and `raw`) are eliminated too.
 
 `espurify` supports [ES5](https://github.com/estree/estree/blob/master/spec.md) and [ES6](https://github.com/estree/estree/blob/master/es6.md) properties.
+
+
+### var customizedCloneFunction = espurify.customize(options)
+
+Returns customized function for cloning AST, configured by custom `options`.
+
+
+### var purifiedAstClone = customizedCloneFunction(originalAst)
+
+Returns new clone of `originalAst` by customized function.
+
+
+
+#### options
+
+| type     | default value |
+|:---------|:--------------|
+| `object` | `{}`          |
+
+Configuration options. If not passed, default options will be used.
+
+
+#### options.extra
+
+| type                | default value |
+|:--------------------|:--------------|
+| `array` of `string` | null          |
+
+List of extra properties to be left in result AST. For example, functions returned by `espurify.customize({extra: ['raw']})` will preserve `raw` properties of `Literal`. Functions return by `espurify.customize({extra: ['loc', 'range']})` will preserve `loc` and `range` properties of each Node.
 
 
 EXAMPLE
