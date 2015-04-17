@@ -20,4 +20,5 @@ var espurify = createCloneFunction();
 espurify.clone = function (ast, options) {
     return createCloneFunction(options)(ast);
 };
+espurify.customize = createCloneFunction;
 module.exports = espurify;
