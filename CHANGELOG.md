@@ -1,3 +1,11 @@
+## [1.2.0](https://github.com/estools/espurify/releases/tag/v1.2.0) (2015-04-17)
+
+
+#### Features
+
+* [performance optimization](https://github.com/estools/espurify/pull/1)
+
+
 ## [1.1.0](https://github.com/estools/espurify/releases/tag/v1.1.0) (2015-04-12)
 
 
