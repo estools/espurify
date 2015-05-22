@@ -14,10 +14,10 @@
     "xtend": "^4.0.0"
   },
   "devDependencies": {
-    "esprima": "^2.1.0",
-    "estraverse": "^3.1.0",
+    "esprima": "^2.2.0",
+    "estraverse": "^4.1.0",
     "jshint": "^2.7.0",
-    "mocha": "^2.2.4"
+    "mocha": "^2.2.5"
   },
   "files": [
     "CHANGELOG.md",
