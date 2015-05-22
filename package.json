@@ -36,10 +36,7 @@
     "ecmascript",
     "es6"
   ],
-  "license": {
-    "type": "MIT",
-    "url": "https://github.com/estools/espurify/blob/master/MIT-LICENSE.txt"
-  },
+  "license": "MIT",
   "main": "index.js",
   "repository": {
     "type": "git",
