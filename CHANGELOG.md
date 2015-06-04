@@ -1,3 +1,11 @@
+## [1.3.0](https://github.com/estools/espurify/releases/tag/v1.3.0) (2015-06-05)
+
+
+#### Features
+
+* add `delegate` to YieldExpression ([8ef733ed](https://github.com/estools/espurify/commit/8ef733edf15b49958265c1a866dd57802eda07c2))
+
+
 ## [1.2.0](https://github.com/estools/espurify/releases/tag/v1.2.0) (2015-04-17)
 
 
