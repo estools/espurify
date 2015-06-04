@@ -14,9 +14,13 @@
     "xtend": "^4.0.0"
   },
   "devDependencies": {
+    "browserify": "^10.2.3",
+    "derequire": "^2.0.0",
+    "dereserve": "^0.1.1",
     "esprima": "^2.2.0",
     "estraverse": "^4.1.0",
     "jshint": "^2.8.0",
+    "licensify": "^1.1.0",
     "mocha": "^2.2.5"
   },
   "files": [
@@ -43,7 +47,7 @@
     "url": "git://github.com/estools/espurify.git"
   },
   "scripts": {
-    "build": "browserify index.js --standalone espurify | dereserve | derequire > ./build/espurify.js",
+    "build": "browserify index.js --plugin licensify --standalone espurify | dereserve | derequire > ./build/espurify.js",
     "lint": "jshint index.js",
     "test": "npm run lint && mocha test"
   }
