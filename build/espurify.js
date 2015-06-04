@@ -1,27 +1,27 @@
-(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.espurify = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw (f.code="MODULE_NOT_FOUND", f)}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
 /**
- * espurify - Clone new AST without extra properties
+ * Modules in this bundle
  * 
- * https://github.com/estools/espurify
- *
- * Copyright (c) 2014-2015 Takuto Wada
- * Licensed under the MIT license.
- *   https://github.com/estools/espurify/blob/master/MIT-LICENSE.txt
+ * espurify:
+ *   license: MIT
+ *   author: Takuto Wada <takuto.wada@gmail.com>
+ * 
+ * isarray:
+ *   license: MIT
+ *   author: Julian Gruber <mail@juliangruber.com>
+ *   maintainers: juliangruber <julian@juliangruber.com>
+ * 
+ * object-keys:
+ *   license: MIT
+ *   author: Jordan Harband
+ *   maintainers: ljharb <ljharb@gmail.com>
+ * 
+ * xtend:
+ *   licenses: MIT
+ *   author: Raynos <raynos2@gmail.com>
+ *   contributors: Jake Verbaten, Matt Esch
+ * 
  */
-'use strict';
-
-var createWhitelist = _dereq_('./lib/create-whitelist');
-var cloneWithWhitelist = _dereq_('./lib/clone-ast');
-
-function createCloneFunction (options) {
-    return cloneWithWhitelist(createWhitelist(options));
-}
-
-var espurify = createCloneFunction();
-espurify.customize = createCloneFunction;
-module.exports = espurify;
-
-},{"./lib/clone-ast":3,"./lib/create-whitelist":4}],2:[function(_dereq_,module,exports){
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.espurify = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw (f.code="MODULE_NOT_FOUND", f)}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
 module.exports = {
     ArrayExpression: ['type', 'elements'],
     ArrayPattern: ['type', 'elements'],
@@ -87,10 +87,10 @@ module.exports = {
     VariableDeclarator: ['type', 'id', 'init'],
     WhileStatement: ['type', 'test', 'body'],
     WithStatement: ['type', 'object', 'body'],
-    YieldExpression: ['type', 'argument']
+    YieldExpression: ['type', 'argument', 'delegate']
 };
 
-},{}],3:[function(_dereq_,module,exports){
+},{}],2:[function(_dereq_,module,exports){
 'use strict';
 
 var isArray = _dereq_('isarray');
@@ -156,7 +156,7 @@ module.exports = function cloneWithWhitelist (whitelist) {
     return cloneRoot;
 };
 
-},{"isarray":5}],4:[function(_dereq_,module,exports){
+},{"isarray":4}],3:[function(_dereq_,module,exports){
 'use strict';
 
 var defaultProps = _dereq_('./ast-properties');
@@ -175,17 +175,18 @@ module.exports = function createWhitelist (options) {
     return result;
 };
 
-},{"./ast-properties":2,"object-keys":6,"xtend":8}],5:[function(_dereq_,module,exports){
+},{"./ast-properties":1,"object-keys":5,"xtend":7}],4:[function(_dereq_,module,exports){
 module.exports = Array.isArray || function (arr) {
   return Object.prototype.toString.call(arr) == '[object Array]';
 };
 
-},{}],6:[function(_dereq_,module,exports){
+},{}],5:[function(_dereq_,module,exports){
 'use strict';
 
 // modified from https://github.com/es-shims/es5-shim
 var has = Object.prototype.hasOwnProperty;
 var toStr = Object.prototype.toString;
+var slice = Array.prototype.slice;
 var isArgs = _dereq_('./isArguments');
 var hasDontEnumBug = !({ 'toString': null }).propertyIsEnumerable('toString');
 var hasProtoEnumBug = function () {}.propertyIsEnumerable('prototype');
@@ -245,13 +246,28 @@ var keysShim = function keys(object) {
 keysShim.shim = function shimObjectKeys() {
 	if (!Object.keys) {
 		Object.keys = keysShim;
+	} else {
+		var keysWorksWithArguments = (function () {
+			// Safari 5.0 bug
+			return (Object.keys(arguments) || '').length === 2;
+		}(1, 2));
+		if (!keysWorksWithArguments) {
+			var originalKeys = Object.keys;
+			Object.keys = function keys(object) {
+				if (isArgs(object)) {
+					return originalKeys(slice.call(object));
+				} else {
+					return originalKeys(object);
+				}
+			};
+		}
 	}
 	return Object.keys || keysShim;
 };
 
 module.exports = keysShim;
 
-},{"./isArguments":7}],7:[function(_dereq_,module,exports){
+},{"./isArguments":6}],6:[function(_dereq_,module,exports){
 'use strict';
 
 var toStr = Object.prototype.toString;
@@ -260,17 +276,17 @@ module.exports = function isArguments(value) {
 	var str = toStr.call(value);
 	var isArgs = str === '[object Arguments]';
 	if (!isArgs) {
-		isArgs = str !== '[object Array]'
-			&& value !== null
-			&& typeof value === 'object'
-			&& typeof value.length === 'number'
-			&& value.length >= 0
-			&& toStr.call(value.callee) === '[object Function]';
+		isArgs = str !== '[object Array]' &&
+			value !== null &&
+			typeof value === 'object' &&
+			typeof value.length === 'number' &&
+			value.length >= 0 &&
+			toStr.call(value.callee) === '[object Function]';
 	}
 	return isArgs;
 };
 
-},{}],8:[function(_dereq_,module,exports){
+},{}],7:[function(_dereq_,module,exports){
 module.exports = extend
 
 function extend() {
@@ -289,6 +305,29 @@ function extend() {
     return target
 }
 
-},{}]},{},[1])(1)
+},{}],8:[function(_dereq_,module,exports){
+/**
+ * espurify - Clone new AST without extra properties
+ * 
+ * https://github.com/estools/espurify
+ *
+ * Copyright (c) 2014-2015 Takuto Wada
+ * Licensed under the MIT license.
+ *   https://github.com/estools/espurify/blob/master/MIT-LICENSE.txt
+ */
+'use strict';
+
+var createWhitelist = _dereq_('./lib/create-whitelist');
+var cloneWithWhitelist = _dereq_('./lib/clone-ast');
+
+function createCloneFunction (options) {
+    return cloneWithWhitelist(createWhitelist(options));
+}
+
+var espurify = createCloneFunction();
+espurify.customize = createCloneFunction;
+module.exports = espurify;
+
+},{"./lib/clone-ast":2,"./lib/create-whitelist":3}]},{},[8])(8)
 });
 
