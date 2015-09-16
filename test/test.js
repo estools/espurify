@@ -10,6 +10,7 @@ describe('eliminate extra properties from AST output', function () {
     beforeEach(function () {
         this.expected = {
             type: 'Program',
+            sourceType: 'script',
             body: [
                 {
                     type: 'ExpressionStatement',
@@ -39,6 +40,7 @@ describe('eliminate extra properties from AST output', function () {
 
         assert.deepEqual(ast, {
             type: 'Program',
+            sourceType: 'script',
             body: [
                 {
                     type: 'ExpressionStatement',
@@ -89,6 +91,7 @@ describe('eliminate extra properties from AST output', function () {
         var purified = espurify(ast);
         assert.deepEqual(ast, {
             type: 'Program',
+            sourceType: 'script',
             body: [
                 {
                     type: 'ExpressionStatement',
@@ -141,6 +144,7 @@ describe('eliminate extra properties from AST output', function () {
 
         assert.deepEqual(ast, {
             type: 'Program',
+            sourceType: 'script',
             body: [
                 {
                     type: 'ExpressionStatement',
@@ -237,6 +241,7 @@ describe('eliminate extra properties from AST output', function () {
 
         assert.deepEqual(ast, {
             type: 'Program',
+            sourceType: 'script',
             body: [
                 {
                     type: 'ExpressionStatement',
@@ -269,10 +274,11 @@ describe('eliminate extra properties from AST output', function () {
 });
 
 
-it('RexExpLiteral', function () {
+it('RegExpLiteral', function () {
     var ast = esprima.parse('var re = /^foo$/im', {tolerant: true, tokens: true, range: true, raw: true});
     var expected = {
         type: 'Program',
+        sourceType: 'script',
         body: [
             {
                 type: 'VariableDeclaration',
@@ -306,6 +312,7 @@ it('ES6 features', function () {
     var ast = esprima.parse('evens.map(v => v + 1);', {tolerant: true, tokens: true, range: true, raw: true});
     var expected = {
         type: 'Program',
+        sourceType: 'script',
         body: [
             {
                 type: 'ExpressionStatement',
