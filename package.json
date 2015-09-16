@@ -17,7 +17,7 @@
     "browserify": "^10.2.3",
     "derequire": "^2.0.0",
     "dereserve": "^0.1.1",
-    "esprima": "^2.2.0",
+    "esprima": "^2.6.0",
     "estraverse": "^4.1.0",
     "jshint": "^2.8.0",
     "licensify": "^1.1.0",

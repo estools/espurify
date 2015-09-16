@@ -11,6 +11,7 @@ describe('espurify.customize', function () {
         var purified = clone(ast);
         assert.deepEqual(purified, {
             type: 'Program',
+            sourceType: 'script',
             body: [
                 {
                     type: 'ExpressionStatement',
@@ -38,6 +39,7 @@ describe('espurify.customize', function () {
         var purified = clone(ast);
         assert.deepEqual(purified, {
             type: 'Program',
+            sourceType: 'script',
             body: [
                 {
                     type: 'ExpressionStatement',
@@ -66,6 +68,7 @@ describe('espurify.customize', function () {
         var purified = clone(ast);
         assert.deepEqual(purified, {
             type: 'Program',
+            sourceType: 'script',
             body: [
                 {
                     type: 'ExpressionStatement',
@@ -144,6 +147,7 @@ describe('espurify.customize', function () {
         var purified = clone(ast);
         assert.deepEqual(purified, {
             type: 'Program',
+            sourceType: 'script',
             body: [
                 {
                     type: 'ExpressionStatement',
@@ -191,6 +195,7 @@ describe('espurify.customize', function () {
         var purified = clone(ast);
         var expected = {
             type: 'Program',
+            sourceType: 'script',
             body: [
                 {
                     type: 'ExpressionStatement',
