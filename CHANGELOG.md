@@ -1,3 +1,11 @@
+## [1.4.0](https://github.com/estools/espurify/releases/tag/v1.4.0) (2015-12-18)
+
+
+#### Features
+
+* [expose `cloneWithWhitelist` to deal with non-standard AST trees](https://github.com/estools/espurify/pull/4)
+
+
 ## [1.3.0](https://github.com/estools/espurify/releases/tag/v1.3.0) (2015-06-05)
 
 
