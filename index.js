@@ -18,4 +18,5 @@ function createCloneFunction (options) {
 
 var espurify = createCloneFunction();
 espurify.customize = createCloneFunction;
+espurify.cloneWithWhitelist = cloneWithWhitelist;
 module.exports = espurify;

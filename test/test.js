@@ -1,6 +1,10 @@
 var espurify = require('..'),
     esprima = require('esprima'),
     estraverse = require('estraverse'),
+    babelTypes = require('babel-types'),
+    babylon = require('babylon'),
+    fs = require('fs'),
+    path = require('path'),
     syntax = estraverse.Syntax,
     assert = require('assert');
 
@@ -362,4 +366,41 @@ it('ES6 features', function () {
     };
     var purified = espurify(ast);
     assert.deepEqual(purified, expected);
+});
+
+
+function traverse(object, currentKey, visitor) {
+    var key, child;
+    visitor.call(null, object, currentKey);
+    for (key in object) {
+        if (object.hasOwnProperty(key)) {
+            child = object[key];
+            if (typeof child === 'object' && child !== null) {
+                traverse(child, key, visitor);
+            }
+        }
+    }
+}
+
+it('cloneWithWhitelist - JSX and Flow Nodes', function () {
+    var code = fs.readFileSync(path.join(__dirname, 'fixtures', 'CounterContainer.jsx'), 'utf8');
+    var ast = babylon.parse(code, {
+        sourceType: "module",
+        plugins: [
+            "classProperties",
+            "jsx",
+            "flow"
+        ]
+    });
+    var astWhiteList = Object.keys(babelTypes.BUILDER_KEYS).reduce(function (props, key) {
+        props[key] = ['type'].concat(babelTypes.BUILDER_KEYS[key]);
+        return props;
+    }, {});
+    var purify = espurify.cloneWithWhitelist(astWhiteList);
+    var purified = purify(ast.program);
+    traverse(purified, null, function (node, key) {
+        assert.notEqual(key, 'loc');
+        assert.notEqual(key, 'start');
+        assert.notEqual(key, 'end');
+    });
 });

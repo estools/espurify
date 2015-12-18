@@ -20,6 +20,34 @@ Leaves properties defined in [The ESTree Spec](https://github.com/estree/estree)
 `espurify` supports [ES5](https://github.com/estree/estree/blob/master/spec.md) and [ES6](https://github.com/estree/estree/blob/master/es6.md) properties.
 
 
+### var customizedCloneFunctionWithWhiteList = espurify.cloneWithWhitelist(whiteList)
+
+Returns customized function for cloning AST, with user-provided `whiteList`.
+
+
+### var purifiedAstClone = customizedCloneFunctionWithWhiteList(originalAst)
+
+Returns new clone of `originalAst` by customized function.
+
+
+#### whiteList
+
+| type     | default value |
+|:---------|:--------------|
+| `object` | N/A           |
+
+`whiteList` is an object containing NodeType as keys and properties as values.
+
+```js
+{
+    ArrayExpression: ['type', 'elements'],
+    ArrayPattern: ['type', 'elements'],
+    ArrowFunctionExpression: ['type', 'id', 'params', 'body', 'generator', 'expression'],
+    AssignmentExpression: ['type', 'operator', 'left', 'right'],
+    ...
+```
+
+
 ### var customizedCloneFunction = espurify.customize(options)
 
 Returns customized function for cloning AST, configured by custom `options`.
