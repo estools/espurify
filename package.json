@@ -9,7 +9,7 @@
   },
   "bugs": "https://github.com/estools/espurify/issues",
   "dependencies": {
-    "isarray": "^0.0.1",
+    "isarray": "^1.0.0",
     "object-keys": "^1.0.4",
     "xtend": "^4.0.0"
   },
