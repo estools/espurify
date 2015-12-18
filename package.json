@@ -49,7 +49,9 @@
     "url": "git://github.com/estools/espurify.git"
   },
   "scripts": {
-    "build": "browserify index.js --plugin licensify --standalone espurify | dereserve | derequire > ./build/espurify.js",
+    "preversion": "npm test",
+    "version": "npm run dist && git add -A build",
+    "dist": "browserify index.js --plugin licensify --standalone espurify | dereserve | derequire > ./build/espurify.js",
     "lint": "jshint index.js",
     "test": "npm run lint && mocha test"
   }
