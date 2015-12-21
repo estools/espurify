@@ -1,3 +1,11 @@
+## [1.5.0](https://github.com/estools/espurify/releases/tag/v1.5.0) (2015-12-21)
+
+
+#### Features
+
+* prepend `type` to whitelist if it does not exist ([af941315](https://github.com/estools/espurify/commit/af9413158f12af40cdbadf155c83ec681b3f60cb))
+
+
 ## [1.4.0](https://github.com/estools/espurify/releases/tag/v1.4.0) (2015-12-18)
 
 
