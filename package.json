@@ -9,6 +9,8 @@
   },
   "bugs": "https://github.com/estools/espurify/issues",
   "dependencies": {
+    "array-reduce": "0.0.0",
+    "indexof": "0.0.1",
     "isarray": "^1.0.0",
     "object-keys": "^1.0.4",
     "xtend": "^4.0.0"

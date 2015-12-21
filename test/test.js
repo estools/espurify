@@ -382,25 +382,39 @@ function traverse(object, currentKey, visitor) {
     }
 }
 
-it('cloneWithWhitelist - JSX and Flow Nodes', function () {
-    var code = fs.readFileSync(path.join(__dirname, 'fixtures', 'CounterContainer.jsx'), 'utf8');
-    var ast = babylon.parse(code, {
-        sourceType: "module",
-        plugins: [
-            "classProperties",
-            "jsx",
-            "flow"
-        ]
+describe('cloneWithWhitelist', function () {
+    beforeEach(function () {
+        var code = fs.readFileSync(path.join(__dirname, 'fixtures', 'CounterContainer.jsx'), 'utf8');
+        var babelAst = babylon.parse(code, {
+            sourceType: "module",
+            plugins: [
+                "classProperties",
+                "jsx",
+                "flow"
+            ]
+        });
+        this.ast = babelAst.program;
     });
-    var astWhiteList = Object.keys(babelTypes.BUILDER_KEYS).reduce(function (props, key) {
-        props[key] = ['type'].concat(babelTypes.BUILDER_KEYS[key]);
-        return props;
-    }, {});
-    var purify = espurify.cloneWithWhitelist(astWhiteList);
-    var purified = purify(ast.program);
-    traverse(purified, null, function (node, key) {
-        assert.notEqual(key, 'loc');
-        assert.notEqual(key, 'start');
-        assert.notEqual(key, 'end');
+    it('complete whitelist', function () {
+        var astWhiteList = Object.keys(babelTypes.BUILDER_KEYS).reduce(function (props, key) {
+            props[key] = ['type'].concat(babelTypes.BUILDER_KEYS[key]);
+            return props;
+        }, {});
+        var purifyAst = espurify.cloneWithWhitelist(astWhiteList);
+        var purified = purifyAst(this.ast);
+        traverse(purified, null, function (node, key) {
+            assert.notEqual(key, 'loc');
+            assert.notEqual(key, 'start');
+            assert.notEqual(key, 'end');
+        });
+    });
+    it('babel.types.BUILDER_KEYS', function () {
+        var purifyAst = espurify.cloneWithWhitelist(babelTypes.BUILDER_KEYS);
+        var purified = purifyAst(this.ast);
+        traverse(purified, null, function (node, key) {
+            assert.notEqual(key, 'loc');
+            assert.notEqual(key, 'start');
+            assert.notEqual(key, 'end');
+        });
     });
 });
