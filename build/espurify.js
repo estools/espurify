@@ -6,7 +6,18 @@
  *   license: MIT
  *   author: Takuto Wada <takuto.wada@gmail.com>
  *   homepage: https://github.com/estools/espurify
- *   version: 1.4.0
+ *   version: 1.5.0
+ * 
+ * array-reduce:
+ *   license: MIT
+ *   author: James Halliday <mail@substack.net>
+ *   maintainers: substack <mail@substack.net>
+ *   homepage: https://github.com/substack/array-reduce
+ *   version: 0.0.0
+ * 
+ * indexof:
+ *   maintainers: tjholowaychuk <tj@vision-media.ca>
+ *   version: 0.0.1
  * 
  * isarray:
  *   license: MIT
@@ -130,8 +141,20 @@ module.exports = {
 'use strict';
 
 var isArray = _dereq_('isarray');
+var objectKeys = _dereq_('object-keys');
+var indexOf = _dereq_('indexof');
+var reduce = _dereq_('array-reduce');
 
-module.exports = function cloneWithWhitelist (whitelist) {
+module.exports = function cloneWithWhitelist (astWhiteList) {
+    var whitelist = reduce(objectKeys(astWhiteList), function (props, key) {
+        var currentProps = astWhiteList[key];
+        var prepend = [];
+        if (indexOf(currentProps, 'type') === -1) {
+            prepend.push('type');
+        }
+        props[key] = prepend.concat(currentProps);
+        return props;
+    }, {});
 
     function cloneRoot (ast) {
         return cloneContainer({}, ast);
@@ -192,7 +215,7 @@ module.exports = function cloneWithWhitelist (whitelist) {
     return cloneRoot;
 };
 
-},{"isarray":5}],4:[function(_dereq_,module,exports){
+},{"array-reduce":5,"indexof":6,"isarray":7,"object-keys":8}],4:[function(_dereq_,module,exports){
 'use strict';
 
 var defaultProps = _dereq_('./ast-properties');
@@ -211,14 +234,45 @@ module.exports = function createWhitelist (options) {
     return result;
 };
 
-},{"./ast-properties":2,"object-keys":6,"xtend":8}],5:[function(_dereq_,module,exports){
+},{"./ast-properties":2,"object-keys":8,"xtend":10}],5:[function(_dereq_,module,exports){
+var hasOwn = Object.prototype.hasOwnProperty;
+
+module.exports = function (xs, f, acc) {
+    var hasAcc = arguments.length >= 3;
+    if (hasAcc && xs.reduce) return xs.reduce(f, acc);
+    if (xs.reduce) return xs.reduce(f);
+    
+    for (var i = 0; i < xs.length; i++) {
+        if (!hasOwn.call(xs, i)) continue;
+        if (!hasAcc) {
+            acc = xs[i];
+            hasAcc = true;
+            continue;
+        }
+        acc = f(acc, xs[i], i);
+    }
+    return acc;
+};
+
+},{}],6:[function(_dereq_,module,exports){
+
+var indexOf = [].indexOf;
+
+module.exports = function(arr, obj){
+  if (indexOf) return arr.indexOf(obj);
+  for (var i = 0; i < arr.length; ++i) {
+    if (arr[i] === obj) return i;
+  }
+  return -1;
+};
+},{}],7:[function(_dereq_,module,exports){
 var toString = {}.toString;
 
 module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
 };
 
-},{}],6:[function(_dereq_,module,exports){
+},{}],8:[function(_dereq_,module,exports){
 'use strict';
 
 // modified from https://github.com/es-shims/es5-shim
@@ -348,7 +402,7 @@ keysShim.shim = function shimObjectKeys() {
 
 module.exports = keysShim;
 
-},{"./isArguments":7}],7:[function(_dereq_,module,exports){
+},{"./isArguments":9}],9:[function(_dereq_,module,exports){
 'use strict';
 
 var toStr = Object.prototype.toString;
@@ -367,7 +421,7 @@ module.exports = function isArguments(value) {
 	return isArgs;
 };
 
-},{}],8:[function(_dereq_,module,exports){
+},{}],10:[function(_dereq_,module,exports){
 module.exports = extend
 
 var hasOwnProperty = Object.prototype.hasOwnProperty;
