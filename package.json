@@ -18,13 +18,13 @@
   "devDependencies": {
     "babel-types": "^6.3.20",
     "babylon": "^6.3.20",
-    "browserify": "^12.0.1",
+    "browserify": "^13.0.0",
     "derequire": "^2.0.2",
     "dereserve": "^0.1.1",
     "esprima": "^2.6.0",
     "estraverse": "^4.1.0",
     "jshint": "^2.8.0",
-    "licensify": "^2.0.1",
+    "licensify": "^3.1.0",
     "mocha": "^2.3.2"
   },
   "files": [
