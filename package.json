@@ -34,8 +34,7 @@
     "index.js",
     "lib",
     "build/espurify.js",
-    "package.json",
-    "test"
+    "package.json"
   ],
   "homepage": "https://github.com/estools/espurify",
   "keywords": [
