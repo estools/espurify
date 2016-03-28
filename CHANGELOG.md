@@ -1,3 +1,11 @@
+### [1.5.1](https://github.com/estools/espurify/releases/tag/v1.5.1) (2016-03-28)
+
+
+### Performance Improvements
+
+* [Improve AST clone performance](https://github.com/estools/espurify/pull/5)
+
+
 ## [1.5.0](https://github.com/estools/espurify/releases/tag/v1.5.0) (2015-12-21)
 
 
