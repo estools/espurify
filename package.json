@@ -9,11 +9,7 @@
   },
   "bugs": "https://github.com/estools/espurify/issues",
   "dependencies": {
-    "array-reduce": "0.0.0",
-    "indexof": "0.0.1",
-    "isarray": "^1.0.0",
-    "object-assign": "^4.0.1",
-    "object-keys": "^1.0.4"
+    "core-js": "^2.0.0"
   },
   "devDependencies": {
     "babel-types": "^6.3.20",
