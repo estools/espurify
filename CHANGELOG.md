@@ -1,3 +1,11 @@
+## [1.6.0](https://github.com/estools/espurify/releases/tag/v1.6.0) (2016-05-25)
+
+
+#### Features
+
+* [Consolidate ponyfills into core-js](https://github.com/estools/espurify/pull/6)
+
+
 ### [1.5.1](https://github.com/estools/espurify/releases/tag/v1.5.1) (2016-03-28)
 
 
