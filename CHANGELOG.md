@@ -1,3 +1,11 @@
+### [1.6.1](https://github.com/estools/espurify/releases/tag/v1.6.1) (2017-02-13)
+
+
+#### Bug Fixes
+
+* fix property order of ConditionalExpression ([01c13ada](https://github.com/estools/espurify/commit/01c13adac4ab304c9e5a50bc9bd16f60ad2e872b))
+
+
 ## [1.6.0](https://github.com/estools/espurify/releases/tag/v1.6.0) (2016-05-25)
 
 
