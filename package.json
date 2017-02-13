@@ -16,7 +16,7 @@
     "babylon": "^6.3.20",
     "browserify": "^13.0.0",
     "derequire": "^2.0.2",
-    "dereserve": "^0.1.1",
+    "dereserve": "^1.0.0",
     "esprima": "^2.6.0",
     "estraverse": "^4.1.0",
     "jshint": "^2.8.0",
