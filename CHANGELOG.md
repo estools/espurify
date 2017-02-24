@@ -1,3 +1,11 @@
+## [1.7.0](https://github.com/estools/espurify/releases/tag/v1.7.0) (2017-02-24)
+
+
+#### Features
+
+* [Support ES2017 types and properties](https://github.com/estools/espurify/pull/8)
+
+
 ### [1.6.1](https://github.com/estools/espurify/releases/tag/v1.6.1) (2017-02-13)
 
 
