@@ -1,5 +1,6 @@
 var espurify = require('..'),
     esprima = require('esprima'),
+    acorn = require('acorn'),
     estraverse = require('estraverse'),
     babelTypes = require('babel-types'),
     babylon = require('babylon'),
@@ -361,6 +362,55 @@ it('ES6 features', function () {
                         }
                     ]
                 }
+            }
+        ]
+    };
+    var purified = espurify(ast);
+    assert.deepEqual(purified, expected);
+});
+
+
+it('ES2017 features', function () {
+    var ast = acorn.parse('async function foo (task) { return await task(); }',
+                          {locations: true, ranges: true, ecmaVersion: 2017}
+                         );
+    var expected = {
+        type: 'Program',
+        sourceType: 'script',
+        body: [
+            {
+                type: 'FunctionDeclaration',
+                id: {
+                    name: "foo",
+                    type: "Identifier"
+                },
+                params: [
+                    {
+                        name: "task",
+                        type: "Identifier"
+                    }
+                ],
+                body: {
+                    type: "BlockStatement",
+                    body: [
+                        {
+                            type: "ReturnStatement",
+                            argument: {
+                                type: "AwaitExpression",
+                                argument: {
+                                    type: "CallExpression",
+                                    callee: {
+                                        name: "task",
+                                        type: "Identifier"
+                                    },
+                                    arguments: []
+                                }
+                            }
+                        }
+                    ]
+                },
+                generator: false,
+                async: true
             }
         ]
     };
