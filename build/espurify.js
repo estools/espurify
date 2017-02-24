@@ -6,7 +6,7 @@
  *   license: MIT (http://opensource.org/licenses/MIT)
  *   author: Takuto Wada <takuto.wada@gmail.com>
  *   homepage: https://github.com/estools/espurify
- *   version: 1.6.1
+ *   version: 1.7.0
  *
  * core-js:
  *   license: MIT (http://opensource.org/licenses/MIT)
@@ -44,9 +44,10 @@ module.exports = espurify;
 module.exports = {
     ArrayExpression: ['type', 'elements'],
     ArrayPattern: ['type', 'elements'],
-    ArrowFunctionExpression: ['type', 'id', 'params', 'body', 'generator', 'expression'],
+    ArrowFunctionExpression: ['type', 'id', 'params', 'body', 'generator', 'expression', 'async'],
     AssignmentExpression: ['type', 'operator', 'left', 'right'],
     AssignmentPattern: ['type', 'left', 'right'],
+    AwaitExpression: ['type', 'argument'],
     BinaryExpression: ['type', 'operator', 'left', 'right'],
     BlockStatement: ['type', 'body'],
     BreakStatement: ['type', 'label'],
@@ -68,8 +69,8 @@ module.exports = {
     ForInStatement: ['type', 'left', 'right', 'body'],
     ForOfStatement: ['type', 'left', 'right', 'body'],
     ForStatement: ['type', 'init', 'test', 'update', 'body'],
-    FunctionDeclaration: ['type', 'id', 'params', 'body', 'generator'],
-    FunctionExpression: ['type', 'id', 'params', 'body', 'generator'],
+    FunctionDeclaration: ['type', 'id', 'params', 'body', 'generator', 'async'],
+    FunctionExpression: ['type', 'id', 'params', 'body', 'generator', 'async'],
     Identifier: ['type', 'name'],
     IfStatement: ['type', 'test', 'consequent', 'alternate'],
     ImportDeclaration: ['type', 'specifiers', 'source'],
