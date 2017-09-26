@@ -6,6 +6,7 @@ Clone new AST without extra properties
 [![Build Status](https://travis-ci.org/estools/espurify.svg?branch=master)](https://travis-ci.org/estools/espurify)
 [![NPM version](https://badge.fury.io/js/espurify.svg)](https://badge.fury.io/js/espurify)
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://github.com/estools/espurify/blob/master/MIT-LICENSE.txt)
+[![Code Style](https://img.shields.io/badge/code%20style-semistandard-brightgreen.svg)](https://github.com/Flet/semistandard)
 
 
 API

@@ -1,6 +1,6 @@
 /**
  * espurify - Clone new AST without extra properties
- * 
+ *
  * https://github.com/estools/espurify
  *
  * Copyright (c) 2014-2017 Takuto Wada
@@ -13,7 +13,7 @@ var createWhitelist = require('./lib/create-whitelist');
 var cloneWithWhitelist = require('./lib/clone-ast');
 
 function createCloneFunction (options) {
-    return cloneWithWhitelist(createWhitelist(options));
+  return cloneWithWhitelist(createWhitelist(options));
 }
 
 var espurify = createCloneFunction();

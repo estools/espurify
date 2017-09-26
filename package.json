@@ -20,9 +20,10 @@
     "dereserve": "^1.0.0",
     "esprima": "^2.6.0",
     "estraverse": "^4.1.0",
-    "jshint": "^2.8.0",
     "licensify": "^3.1.0",
-    "mocha": "^2.3.2"
+    "mocha": "^2.3.2",
+    "semistandard": "^11.0.0",
+    "snazzy": "^7.0.0"
   },
   "files": [
     "CHANGELOG.md",
@@ -50,7 +51,20 @@
     "preversion": "npm test",
     "version": "npm run dist && git add -A build",
     "dist": "browserify index.js --plugin licensify --standalone espurify | dereserve | derequire > ./build/espurify.js",
-    "lint": "jshint index.js",
+    "lint": "semistandard --verbose | snazzy",
+    "fmt": "semistandard --fix",
     "test": "npm run lint && mocha test"
+  },
+  "semistandard": {
+    "ignore": [
+      "/build/",
+      "/bench/",
+      "**/*.jsx"
+    ],
+    "globals": [
+      "describe",
+      "beforeEach",
+      "it"
+    ]
   }
 }
