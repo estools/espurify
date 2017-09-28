@@ -530,3 +530,144 @@ describe('cloneWithWhitelist', function () {
     });
   });
 });
+
+describe('dealing with circular references in AST', function () {
+  it('circular references in standard node tree', function () {
+    var ident = {
+      type: 'Identifier',
+      name: 'assert'
+    };
+    var literal = {
+      type: 'Literal',
+      value: 'foo',
+      raw: '"foo"'
+    };
+    var callExp = {
+      type: 'CallExpression',
+      callee: ident,
+      arguments: [ literal ]
+    };
+    ident.parent = callExp;
+    literal.parent = callExp;
+    var expStmt = {
+      type: 'ExpressionStatement',
+      expression: callExp
+    };
+    callExp.parent = expStmt;
+    var program = {
+      type: 'Program',
+      sourceType: 'script',
+      body: [ expStmt ],
+      errors: []
+    };
+    expStmt.parent = program;
+
+    assert.deepEqual(espurify(program), {
+      type: 'Program',
+      sourceType: 'script',
+      body: [
+        {
+          type: 'ExpressionStatement',
+          expression: {
+            type: 'CallExpression',
+            callee: {
+              type: 'Identifier',
+              name: 'assert'
+            },
+            arguments: [
+              {
+                type: 'Literal',
+                value: 'foo'
+              }
+            ]
+          }
+        }
+      ]
+    });
+  });
+
+  it('circular references in non-standard node tree', function () {
+    var key0 = {
+      type: 'Identifier',
+      name: 'qty'
+    };
+    var value0 = {
+      type: 'NumberTypeAnnotation'
+    };
+    var prop0 = {
+      type: 'ObjectTypeProperty',
+      key: key0,
+      value: value0
+    };
+    key0.parent = prop0;
+    value0.parent = prop0;
+    var key1 = {
+      type: 'Identifier',
+      name: 'total'
+    };
+    var value1 = {
+      type: 'NumberTypeAnnotation'
+    };
+    var prop1 = {
+      type: 'ObjectTypeProperty',
+      key: key1,
+      value: value1
+    };
+    key1.parent = prop1;
+    value1.parent = prop1;
+    var right = {
+      type: 'ObjectTypeAnnotation',
+      properties: [
+        prop0,
+        prop1
+      ],
+      indexers: [],
+      callProperties: []
+    };
+    prop0.parent = right;
+    prop1.parent = right;
+    var id = {
+      type: 'Identifier',
+      name: 'CounterContainerStateType'
+    };
+    var root = {type: 'TypeAlias', id, typeParameters: null, right};
+    id.parent = root;
+    right.parent = root;
+
+    assert.deepEqual(espurify(root), {
+      type: 'TypeAlias',
+      id: {
+        type: 'Identifier',
+        name: 'CounterContainerStateType'
+      },
+      typeParameters: null,
+      right: {
+        type: 'ObjectTypeAnnotation',
+        properties: [
+          {
+            type: 'ObjectTypeProperty',
+            key: {
+              type: 'Identifier',
+              name: 'qty'
+            },
+            value: {
+              type: 'NumberTypeAnnotation'
+            }
+          },
+          {
+            type: 'ObjectTypeProperty',
+            key: {
+              type: 'Identifier',
+              name: 'total'
+            },
+            value: {
+              type: 'NumberTypeAnnotation'
+            }
+          }
+        ],
+        indexers: [],
+        callProperties: []
+      }
+    });
+  });
+});
