@@ -405,6 +405,82 @@ it('ES2017 features', function () {
   assert.deepEqual(purified, expected);
 });
 
+it('ES2018 features (for-await-of)', function () {
+  var ast = acorn.parse('async function f() { for await (const x of a()) { assert(x); } }',
+    {locations: true, ranges: true, ecmaVersion: 2018}
+  );
+  var expected = {
+    type: 'Program',
+    body: [
+      {
+        type: 'FunctionDeclaration',
+        id: {
+          type: 'Identifier',
+          name: 'f'
+        },
+        params: [],
+        body: {
+          type: 'BlockStatement',
+          body: [
+            {
+              type: 'ForOfStatement',
+              await: true,
+              left: {
+                type: 'VariableDeclaration',
+                declarations: [
+                  {
+                    type: 'VariableDeclarator',
+                    id: {
+                      type: 'Identifier',
+                      name: 'x'
+                    },
+                    init: null
+                  }
+                ],
+                kind: 'const'
+              },
+              right: {
+                type: 'CallExpression',
+                callee: {
+                  type: 'Identifier',
+                  name: 'a'
+                },
+                arguments: []
+              },
+              body: {
+                type: 'BlockStatement',
+                body: [
+                  {
+                    type: 'ExpressionStatement',
+                    expression: {
+                      type: 'CallExpression',
+                      callee: {
+                        type: 'Identifier',
+                        name: 'assert'
+                      },
+                      arguments: [
+                        {
+                          type: 'Identifier',
+                          name: 'x'
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        generator: false,
+        async: true
+      }
+    ],
+    sourceType: 'script'
+  };
+  var purified = espurify(ast);
+  assert.deepEqual(purified, expected);
+});
+
 function traverse (object, currentKey, visitor) {
   var key, child;
   visitor(object, currentKey);
