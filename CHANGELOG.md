@@ -1,3 +1,11 @@
+## [1.8.0](https://github.com/estools/espurify/releases/tag/v1.8.0) (2018-05-10)
+
+
+#### Features
+
+* [Support ES2018 (i.e. async iteration statement: `for-await-of`)](https://github.com/estools/espurify/pull/10)
+
+
 ## [1.7.0](https://github.com/estools/espurify/releases/tag/v1.7.0) (2017-02-24)
 
 
