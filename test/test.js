@@ -345,6 +345,7 @@ it('ES6 features', function () {
                 }
               },
               generator: false,
+              async: false,
               expression: true
             }
           ]
