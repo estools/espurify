@@ -1,3 +1,11 @@
+### [1.8.1](https://github.com/estools/espurify/releases/tag/v1.8.1) (2018-07-10)
+
+
+#### Bug Fixes
+
+* [Deal with circular references in AST](https://github.com/estools/espurify/pull/11)
+
+
 ## [1.8.0](https://github.com/estools/espurify/releases/tag/v1.8.0) (2018-05-10)
 
 
