@@ -255,6 +255,11 @@ AUTHOR
 * [Takuto Wada](https://github.com/twada)
 
 
+CONTRIBUTORS
+---------------------------------------
+* [Renée Kooi](https://github.com/goto-bus-stop)
+
+
 LICENSE
 ---------------------------------------
 Licensed under the [MIT](https://github.com/estools/espurify/blob/master/MIT-LICENSE.txt) license.

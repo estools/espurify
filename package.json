@@ -8,7 +8,12 @@
     "url": "https://github.com/twada"
   },
   "bugs": "https://github.com/estools/espurify/issues",
-  "dependencies": {},
+  "contributors": [
+    {
+      "name": "Renée Kooi",
+      "url": "https://github.com/goto-bus-stop"
+    }
+  ],
   "devDependencies": {
     "acorn": "^5.0.0",
     "babel-types": "^6.3.20",
