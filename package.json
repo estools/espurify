@@ -8,9 +8,7 @@
     "url": "https://github.com/twada"
   },
   "bugs": "https://github.com/estools/espurify/issues",
-  "dependencies": {
-    "core-js": "^2.0.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "acorn": "^5.0.0",
     "babel-types": "^6.3.20",
