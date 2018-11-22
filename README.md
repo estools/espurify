@@ -231,24 +231,6 @@ Use
 var espurify = require('espurify');
 ```
 
-#### use espurify module on browser
-
-`espurify` function is exported
-
-    <script type="text/javascript" src="./path/to/node_modules/espurify/build/espurify.js"></script>
-
-
-### via bower
-
-Install
-
-    $ bower install --save espurify
-
-Load (`espurify` function is exported)
-
-    <script type="text/javascript" src="./path/to/bower_components/espurify/build/espurify.js"></script>
-
-
 
 AUTHOR
 ---------------------------------------
