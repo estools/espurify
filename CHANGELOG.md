@@ -1,3 +1,17 @@
+## [2.0.0](https://github.com/estools/espurify/releases/tag/v2.0.0) (2018-11-23)
+
+
+#### Breaking Changes
+
+* [Remove core-js dependency](https://github.com/estools/espurify/pull/12) by [@goto-bus-stop](https://github.com/goto-bus-stop)
+
+We drop support of ancient (= before ES6) environments. Please use polyfills by your own.
+
+* [Drop support for prebuilt bundle and bower](https://github.com/estools/espurify/commit/266670edb6249ec2316265bd1845515c1de5f344)
+
+We stopped providing prebuilt bundle for browsers. Please build your own by your bundler. We also dropped bower support. Please use npm instead.
+
+
 ### [1.8.1](https://github.com/estools/espurify/releases/tag/v1.8.1) (2018-07-10)
 
 
