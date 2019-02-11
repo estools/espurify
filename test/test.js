@@ -668,7 +668,7 @@ describe('dealing with circular references in AST', function () {
     id.parent = root;
     right.parent = root;
 
-    assert.deepEqual(espurify(root), {
+    var expected = {
       type: 'TypeAlias',
       id: {
         type: 'Identifier',
@@ -702,6 +702,13 @@ describe('dealing with circular references in AST', function () {
         indexers: [],
         callProperties: []
       }
-    });
+    };
+    expected.right.parent = expected;
+    expected.right.properties[0].parent = expected.right;
+    expected.right.properties[0].value.parent = expected.right.properties[0];
+    expected.right.properties[1].parent = expected.right;
+    expected.right.properties[1].value.parent = expected.right.properties[1];
+
+    assert.deepEqual(espurify(root), expected);
   });
 });
