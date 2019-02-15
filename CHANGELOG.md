@@ -1,3 +1,11 @@
+### [2.0.1](https://github.com/estools/espurify/releases/tag/v2.0.1) (2019-02-15)
+
+
+#### Bug Fixes
+
+* [Fix cloning when the same object instance is referenced from multiple nodes (and introduce structural cloning)](https://github.com/estools/espurify/pull/13) by [@papandreou](https://github.com/papandreou)
+
+
 ## [2.0.0](https://github.com/estools/espurify/releases/tag/v2.0.0) (2018-11-23)
 
 
