@@ -18,7 +18,14 @@ Returns new clone of `originalAst` but without extra properties.
 
 Leaves properties defined in [The ESTree Spec](https://github.com/estree/estree) (formerly known as [Mozilla SpiderMonkey Parser API](https://developer.mozilla.org/en-US/docs/SpiderMonkey/Parser_API)) only. Also note that extra informations (such as `loc`, `range` and `raw`) are eliminated too.
 
-`espurify` supports [ES5](https://github.com/estree/estree/blob/master/es5.md), [ES2015](https://github.com/estree/estree/blob/master/es2015.md), and [ES2017](https://github.com/estree/estree/blob/master/es2017.md) properties.
+#### Supported ECMAScript versions
+
+- [ES5](https://github.com/estree/estree/blob/master/es5.md)
+- [ES2015](https://github.com/estree/estree/blob/master/es2015.md)
+- [ES2016](https://github.com/estree/estree/blob/master/es2016.md)
+- [ES2017](https://github.com/estree/estree/blob/master/es2017.md)
+- [ES2018](https://github.com/estree/estree/blob/master/es2018.md)
+- [ES2019](https://github.com/estree/estree/blob/master/es2019.md)
 
 
 ### var customizedCloneFunctionWithWhiteList = espurify.cloneWithWhitelist(whiteList)
