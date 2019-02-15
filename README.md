@@ -247,6 +247,7 @@ AUTHOR
 CONTRIBUTORS
 ---------------------------------------
 * [Renée Kooi](https://github.com/goto-bus-stop)
+* [Andreas Lind](https://github.com/papandreou)
 
 
 LICENSE
