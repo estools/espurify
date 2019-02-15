@@ -531,6 +531,40 @@ describe('cloneWithWhitelist', function () {
   });
 });
 
+it('should not break when the same object instance is referenced twice', function () {
+  var loc = { start: { line: 4, column: 0 }, end: { line: 4, column: 9 } };
+  var root = {
+    type: 'Program',
+    sourceType: 'script',
+    body: [
+      {
+        type: 'DebuggerStatement',
+        loc
+      },
+      {
+        type: 'DebuggerStatement',
+        loc
+      }
+    ]
+  };
+
+  var clone = espurify.customize({extra: ['loc']});
+  assert.deepEqual(clone(root), {
+    type: 'Program',
+    sourceType: 'script',
+    body: [
+      {
+        type: 'DebuggerStatement',
+        loc
+      },
+      {
+        type: 'DebuggerStatement',
+        loc
+      }
+    ]
+  });
+});
+
 describe('dealing with circular references in AST', function () {
   it('circular references in standard node tree', function () {
     var ident = {
@@ -634,7 +668,7 @@ describe('dealing with circular references in AST', function () {
     id.parent = root;
     right.parent = root;
 
-    assert.deepEqual(espurify(root), {
+    var expected = {
       type: 'TypeAlias',
       id: {
         type: 'Identifier',
@@ -668,6 +702,13 @@ describe('dealing with circular references in AST', function () {
         indexers: [],
         callProperties: []
       }
-    });
+    };
+    expected.right.parent = expected;
+    expected.right.properties[0].parent = expected.right;
+    expected.right.properties[0].value.parent = expected.right.properties[0];
+    expected.right.properties[1].parent = expected.right;
+    expected.right.properties[1].value.parent = expected.right.properties[1];
+
+    assert.deepEqual(espurify(root), expected);
   });
 });
