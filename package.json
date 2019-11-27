@@ -19,13 +19,13 @@
     }
   ],
   "devDependencies": {
-    "acorn": "^6.0.0",
+    "acorn": "^7.0.0",
     "babel-types": "^6.3.20",
     "babylon": "^6.3.20",
     "esprima": "^4.0.0",
     "estraverse": "^4.1.0",
-    "mocha": "^5.0.0",
-    "semistandard": "^13.0.0",
+    "mocha": "^6.0.0",
+    "semistandard": "^14.0.0",
     "snazzy": "^8.0.0"
   },
   "files": [
