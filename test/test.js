@@ -284,7 +284,7 @@ it('RegExpLiteral', function () {
             },
             init: {
               type: 'Literal',
-              value: {},
+              value: /^foo$/im,
               regex: {
                 pattern: '^foo$',
                 flags: 'im'
