@@ -3,10 +3,10 @@ espurify
 
 Clone new AST without extra properties
 
-[![Build Status](https://travis-ci.org/estools/espurify.svg?branch=master)](https://travis-ci.org/estools/espurify)
-[![NPM version](https://badge.fury.io/js/espurify.svg)](https://badge.fury.io/js/espurify)
-[![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://github.com/estools/espurify/blob/master/MIT-LICENSE.txt)
-[![Code Style](https://img.shields.io/badge/code%20style-semistandard-brightgreen.svg)](https://github.com/Flet/semistandard)
+[![Build Status][ci-image]][ci-url]
+[![NPM version][npm-image]][npm-url]
+[![Code Style][style-image]][style-url]
+[![License][license-image]][license-url]
 
 
 API
@@ -253,3 +253,16 @@ CONTRIBUTORS
 LICENSE
 ---------------------------------------
 Licensed under the [MIT](https://github.com/estools/espurify/blob/master/MIT-LICENSE.txt) license.
+
+
+[npm-url]: https://npmjs.org/package/espurify
+[npm-image]: https://badge.fury.io/js/espurify.svg
+
+[ci-image]: https://github.com/estools/espurify/workflows/Node.js%20CI/badge.svg
+[ci-url]: https://github.com/estools/espurify/actions?query=workflow%3A%22Node.js+CI%22
+
+[style-url]: https://github.com/Flet/semistandard
+[style-image]: https://img.shields.io/badge/code%20style-semistandard-brightgreen.svg
+
+[license-url]: https://github.com/estools/espurify/blob/master/MIT-LICENSE.txt
+[license-image]: https://img.shields.io/badge/license-MIT-brightgreen.svg
