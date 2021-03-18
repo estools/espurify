@@ -481,6 +481,17 @@ it('ES2018 features (for-await-of)', function () {
   assert.deepEqual(purified, expected);
 });
 
+describe('ES2020 features', function () {
+  it('ChainExpression', function () {
+  });
+  it('ExportAllDeclaration', function () {
+  });
+  it('ImportExpression', function () {
+  });
+  it('BigInt literal', function () {
+  });
+});
+
 function traverse (object, currentKey, visitor) {
   var key, child;
   visitor(object, currentKey);
