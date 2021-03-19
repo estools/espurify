@@ -543,6 +543,28 @@ describe('ES2020 features', function () {
     assert.deepEqual(purified, expected);
   });
   it('ExportAllDeclaration', function () {
+    var ast = acorn.parse('export * as foo from "mod";',
+      {locations: true, ranges: true, ecmaVersion: 2020, sourceType: 'module'}
+    );
+    var expected = {
+      type: 'Program',
+      body: [
+        {
+          type: 'ExportAllDeclaration',
+          source: {
+            type: 'Literal',
+            value: 'mod'
+          },
+          exported: {
+            type: 'Identifier',
+            name: 'foo'
+          }
+        }
+      ],
+      sourceType: 'module'
+    };
+    var purified = espurify(ast);
+    assert.deepEqual(purified, expected);
   });
   it('ImportExpression', function () {
   });
