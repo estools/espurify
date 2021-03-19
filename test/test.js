@@ -483,6 +483,64 @@ it('ES2018 features (for-await-of)', function () {
 
 describe('ES2020 features', function () {
   it('ChainExpression', function () {
+    var ast = acorn.parse('obj.aaa?.bbb()?.ccc();',
+      {locations: true, ranges: true, ecmaVersion: 2020}
+    );
+    var expected = {
+      type: 'Program',
+      body: [
+        {
+          type: 'ExpressionStatement',
+          expression: {
+            type: 'ChainExpression',
+            expression: {
+              type: 'CallExpression',
+              callee: {
+                type: 'MemberExpression',
+                object: {
+                  type: 'CallExpression',
+                  callee: {
+                    type: 'MemberExpression',
+                    object: {
+                      type: 'MemberExpression',
+                      object: {
+                        type: 'Identifier',
+                        name: 'obj'
+                      },
+                      property: {
+                        type: 'Identifier',
+                        name: 'aaa'
+                      },
+                      computed: false,
+                      optional: false
+                    },
+                    property: {
+                      type: 'Identifier',
+                      name: 'bbb'
+                    },
+                    computed: false,
+                    optional: true
+                  },
+                  arguments: [],
+                  optional: false
+                },
+                property: {
+                  type: 'Identifier',
+                  name: 'ccc'
+                },
+                computed: false,
+                optional: true
+              },
+              arguments: [],
+              optional: false
+            }
+          }
+        }
+      ],
+      sourceType: 'script'
+    };
+    var purified = espurify(ast);
+    assert.deepEqual(purified, expected);
   });
   it('ExportAllDeclaration', function () {
   });
