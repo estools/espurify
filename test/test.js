@@ -567,6 +567,27 @@ describe('ES2020 features', function () {
     assert.deepEqual(purified, expected);
   });
   it('ImportExpression', function () {
+    var ast = acorn.parse('import(source);',
+      {locations: true, ranges: true, ecmaVersion: 2020, sourceType: 'module'}
+    );
+    var expected = {
+      type: 'Program',
+      body: [
+        {
+          type: 'ExpressionStatement',
+          expression: {
+            type: 'ImportExpression',
+            source: {
+              type: 'Identifier',
+              name: 'source'
+            }
+          }
+        }
+      ],
+      sourceType: 'module'
+    };
+    var purified = espurify(ast);
+    assert.deepEqual(purified, expected);
   });
   it('BigInt literal', function () {
   });
