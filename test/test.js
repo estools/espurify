@@ -590,6 +590,25 @@ describe('ES2020 features', function () {
     assert.deepEqual(purified, expected);
   });
   it('BigInt literal', function () {
+    var ast = acorn.parse('9007199254740991n;',
+      {locations: true, ranges: true, ecmaVersion: 2020}
+    );
+    var expected = {
+      type: 'Program',
+      body: [
+        {
+          type: 'ExpressionStatement',
+          expression: {
+            type: 'Literal',
+            value: 9007199254740991n,
+            bigint: '9007199254740991'
+          }
+        }
+      ],
+      sourceType: 'script'
+    };
+    var purified = espurify(ast);
+    assert.deepEqual(purified, expected);
   });
 });
 
