@@ -481,6 +481,137 @@ it('ES2018 features (for-await-of)', function () {
   assert.deepEqual(purified, expected);
 });
 
+describe('ES2020 features', function () {
+  it('ChainExpression', function () {
+    var ast = acorn.parse('obj.aaa?.bbb()?.ccc();',
+      {locations: true, ranges: true, ecmaVersion: 2020}
+    );
+    var expected = {
+      type: 'Program',
+      body: [
+        {
+          type: 'ExpressionStatement',
+          expression: {
+            type: 'ChainExpression',
+            expression: {
+              type: 'CallExpression',
+              callee: {
+                type: 'MemberExpression',
+                object: {
+                  type: 'CallExpression',
+                  callee: {
+                    type: 'MemberExpression',
+                    object: {
+                      type: 'MemberExpression',
+                      object: {
+                        type: 'Identifier',
+                        name: 'obj'
+                      },
+                      property: {
+                        type: 'Identifier',
+                        name: 'aaa'
+                      },
+                      computed: false,
+                      optional: false
+                    },
+                    property: {
+                      type: 'Identifier',
+                      name: 'bbb'
+                    },
+                    computed: false,
+                    optional: true
+                  },
+                  arguments: [],
+                  optional: false
+                },
+                property: {
+                  type: 'Identifier',
+                  name: 'ccc'
+                },
+                computed: false,
+                optional: true
+              },
+              arguments: [],
+              optional: false
+            }
+          }
+        }
+      ],
+      sourceType: 'script'
+    };
+    var purified = espurify(ast);
+    assert.deepEqual(purified, expected);
+  });
+  it('ExportAllDeclaration', function () {
+    var ast = acorn.parse('export * as foo from "mod";',
+      {locations: true, ranges: true, ecmaVersion: 2020, sourceType: 'module'}
+    );
+    var expected = {
+      type: 'Program',
+      body: [
+        {
+          type: 'ExportAllDeclaration',
+          source: {
+            type: 'Literal',
+            value: 'mod'
+          },
+          exported: {
+            type: 'Identifier',
+            name: 'foo'
+          }
+        }
+      ],
+      sourceType: 'module'
+    };
+    var purified = espurify(ast);
+    assert.deepEqual(purified, expected);
+  });
+  it('ImportExpression', function () {
+    var ast = acorn.parse('import(source);',
+      {locations: true, ranges: true, ecmaVersion: 2020, sourceType: 'module'}
+    );
+    var expected = {
+      type: 'Program',
+      body: [
+        {
+          type: 'ExpressionStatement',
+          expression: {
+            type: 'ImportExpression',
+            source: {
+              type: 'Identifier',
+              name: 'source'
+            }
+          }
+        }
+      ],
+      sourceType: 'module'
+    };
+    var purified = espurify(ast);
+    assert.deepEqual(purified, expected);
+  });
+  it('BigInt literal', function () {
+    var ast = acorn.parse('9007199254740991n;',
+      {locations: true, ranges: true, ecmaVersion: 2020}
+    );
+    var expected = {
+      type: 'Program',
+      body: [
+        {
+          type: 'ExpressionStatement',
+          expression: {
+            type: 'Literal',
+            value: 9007199254740991n,
+            bigint: '9007199254740991'
+          }
+        }
+      ],
+      sourceType: 'script'
+    };
+    var purified = espurify(ast);
+    assert.deepEqual(purified, expected);
+  });
+});
+
 function traverse (object, currentKey, visitor) {
   var key, child;
   visitor(object, currentKey);
