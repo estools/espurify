@@ -16,7 +16,7 @@ API
 
 Returns new clone of `originalAst` but without extra properties.
 
-Leaves properties defined in [The ESTree Spec](https://github.com/estree/estree) (formerly known as [Mozilla SpiderMonkey Parser API](https://developer.mozilla.org/en-US/docs/SpiderMonkey/Parser_API)) only. Also note that extra informations (such as `loc`, `range` and `raw`) are eliminated too.
+Leaves properties defined in [The ESTree Spec](https://github.com/estree/estree) (formerly known as [Mozilla SpiderMonkey Parser API](https://speakerdeck.com/michaelficarra/spidermonkey-parser-api-a-standard-for-structured-js-representations)) only. Also note that extra informations (such as `loc`, `range` and `raw`) are eliminated too.
 
 #### Supported ECMAScript versions
 
