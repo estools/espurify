@@ -1,5 +1,5 @@
 /**
- * espurify - Clone new AST without extra properties
+ * espurify - Clone AST without extra properties
  *
  * https://github.com/estools/espurify
  *
