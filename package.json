@@ -1,6 +1,6 @@
 {
   "name": "espurify",
-  "description": "Clone new AST without extra properties",
+  "description": "Clone AST without extra properties",
   "version": "2.0.1",
   "author": {
     "name": "Takuto Wada",

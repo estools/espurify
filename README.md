@@ -1,7 +1,7 @@
 espurify
 ================================
 
-Clone new AST without extra properties
+Clone AST without extra properties
 
 [![Build Status][ci-image]][ci-url]
 [![NPM version][npm-image]][npm-url]
