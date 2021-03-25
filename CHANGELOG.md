@@ -1,3 +1,15 @@
+## [2.1.0](https://github.com/estools/espurify/releases/tag/v2.1.0) (2021-03-26)
+
+
+#### Features
+
+* [Support ES2020 grammar](https://github.com/estools/espurify/pull/21)
+  * support ChainExpression
+  * support ImportExpression
+  * support exported property of ExportAllDeclaration
+  * support BigInt literals
+
+
 ### [2.0.1](https://github.com/estools/espurify/releases/tag/v2.0.1) (2019-02-15)
 
 
