@@ -1,3 +1,11 @@
+### [2.1.1](https://github.com/estools/espurify/releases/tag/v2.1.1) (2021-03-29)
+
+
+#### Bug Fixes
+
+* Revert relase [2.1.0](https://github.com/estools/espurify/releases/tag/v2.1.0) since it affects to AST matching logic and breaks [some usecases](https://github.com/unassert-js/unassert/issues/18).
+
+
 ## [2.1.0](https://github.com/estools/espurify/releases/tag/v2.1.0) (2021-03-26)
 
 
