@@ -26,7 +26,6 @@ Leaves properties defined in [The ESTree Spec](https://github.com/estree/estree)
 - [ES2017](https://github.com/estree/estree/blob/master/es2017.md)
 - [ES2018](https://github.com/estree/estree/blob/master/es2018.md)
 - [ES2019](https://github.com/estree/estree/blob/master/es2019.md)
-- [ES2020](https://github.com/estree/estree/blob/master/es2020.md)
 
 
 ### var customizedCloneFunctionWithWhiteList = espurify.cloneWithWhitelist(whiteList)
