@@ -10,8 +10,9 @@ const syntax = estraverse.Syntax;
 const assert = require('assert');
 
 describe('eliminate extra properties from AST output', function () {
-  beforeEach(function () {
-    this.expected = {
+  let expected;
+  beforeEach(() => {
+    expected = {
       type: 'Program',
       sourceType: 'script',
       body: [
@@ -82,7 +83,7 @@ describe('eliminate extra properties from AST output', function () {
       errors: []
     });
 
-    assert.deepEqual(purified, this.expected);
+    assert.deepEqual(purified, expected);
   });
 
   it('eliminate range', function () {
@@ -132,7 +133,7 @@ describe('eliminate extra properties from AST output', function () {
       ],
       errors: []
     });
-    assert.deepEqual(purified, this.expected);
+    assert.deepEqual(purified, expected);
   });
 
   it('eliminate loc', function () {
@@ -214,7 +215,7 @@ describe('eliminate extra properties from AST output', function () {
       errors: []
     });
 
-    assert.deepEqual(purified, this.expected);
+    assert.deepEqual(purified, expected);
   });
 
   it('eliminate custom property', function () {
@@ -263,7 +264,7 @@ describe('eliminate extra properties from AST output', function () {
       errors: []
     });
 
-    assert.deepEqual(purified, this.expected);
+    assert.deepEqual(purified, expected);
   });
 });
 
@@ -626,6 +627,7 @@ function traverse (object, currentKey, visitor) {
 }
 
 describe('cloneWithWhitelist', function () {
+  let ast;
   beforeEach(function () {
     const code = fs.readFileSync(path.join(__dirname, 'fixtures', 'CounterContainer.jsx'), 'utf8');
     const babelAst = babylon.parse(code, {
@@ -636,7 +638,7 @@ describe('cloneWithWhitelist', function () {
         'flow'
       ]
     });
-    this.ast = babelAst.program;
+    ast = babelAst.program;
   });
   it('complete whitelist', function () {
     const astWhiteList = Object.keys(babelTypes.BUILDER_KEYS).reduce(function (props, key) {
@@ -644,7 +646,7 @@ describe('cloneWithWhitelist', function () {
       return props;
     }, {});
     const purifyAst = espurify.cloneWithWhitelist(astWhiteList);
-    const purified = purifyAst(this.ast);
+    const purified = purifyAst(ast);
     traverse(purified, null, function (node, key) {
       assert.notEqual(key, 'loc');
       assert.notEqual(key, 'start');
@@ -653,7 +655,7 @@ describe('cloneWithWhitelist', function () {
   });
   it('babel.types.BUILDER_KEYS', function () {
     const purifyAst = espurify.cloneWithWhitelist(babelTypes.BUILDER_KEYS);
-    const purified = purifyAst(this.ast);
+    const purified = purifyAst(ast);
     traverse(purified, null, function (node, key) {
       assert.notEqual(key, 'loc');
       assert.notEqual(key, 'start');
