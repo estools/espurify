@@ -9,14 +9,14 @@
  */
 'use strict';
 
-var createWhitelist = require('./lib/create-whitelist');
-var cloneWithWhitelist = require('./lib/clone-ast');
+const createWhitelist = require('./lib/create-whitelist');
+const cloneWithWhitelist = require('./lib/clone-ast');
 
 function createCloneFunction (options) {
   return cloneWithWhitelist(createWhitelist(options));
 }
 
-var espurify = createCloneFunction();
+const espurify = createCloneFunction();
 espurify.customize = createCloneFunction;
 espurify.cloneWithWhitelist = cloneWithWhitelist;
 module.exports = espurify;

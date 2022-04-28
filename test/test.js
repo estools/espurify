@@ -1,13 +1,13 @@
-var espurify = require('..');
-var esprima = require('esprima');
-var acorn = require('acorn');
-var estraverse = require('estraverse');
-var babelTypes = require('babel-types');
-var babylon = require('babylon');
-var fs = require('fs');
-var path = require('path');
-var syntax = estraverse.Syntax;
-var assert = require('assert');
+const espurify = require('..');
+const esprima = require('esprima');
+const acorn = require('acorn');
+const estraverse = require('estraverse');
+const babelTypes = require('babel-types');
+const babylon = require('babylon');
+const fs = require('fs');
+const path = require('path');
+const syntax = estraverse.Syntax;
+const assert = require('assert');
 
 describe('eliminate extra properties from AST output', function () {
   beforeEach(function () {
@@ -36,8 +36,8 @@ describe('eliminate extra properties from AST output', function () {
   });
 
   it('eliminate tokens and raw', function () {
-    var ast = esprima.parse('assert("foo")', {tolerant: true, tokens: true, raw: true});
-    var purified = espurify(ast);
+    const ast = esprima.parse('assert("foo")', { tolerant: true, tokens: true, raw: true });
+    const purified = espurify(ast);
 
     assert.deepEqual(ast, {
       type: 'Program',
@@ -86,8 +86,8 @@ describe('eliminate extra properties from AST output', function () {
   });
 
   it('eliminate range', function () {
-    var ast = esprima.parse('assert("foo")', {tolerant: true, range: true});
-    var purified = espurify(ast);
+    const ast = esprima.parse('assert("foo")', { tolerant: true, range: true });
+    const purified = espurify(ast);
     assert.deepEqual(ast, {
       type: 'Program',
       sourceType: 'script',
@@ -136,8 +136,8 @@ describe('eliminate extra properties from AST output', function () {
   });
 
   it('eliminate loc', function () {
-    var ast = esprima.parse('assert("foo")', {tolerant: true, loc: true});
-    var purified = espurify(ast);
+    const ast = esprima.parse('assert("foo")', { tolerant: true, loc: true });
+    const purified = espurify(ast);
 
     assert.deepEqual(ast, {
       type: 'Program',
@@ -218,7 +218,7 @@ describe('eliminate extra properties from AST output', function () {
   });
 
   it('eliminate custom property', function () {
-    var ast = esprima.parse('assert("foo")', {tolerant: true, raw: true});
+    const ast = esprima.parse('assert("foo")', { tolerant: true, raw: true });
     estraverse.replace(ast, {
       leave: function (currentNode, parentNode) {
         if (currentNode.type === syntax.Literal && typeof currentNode.raw !== 'undefined') {
@@ -232,7 +232,7 @@ describe('eliminate extra properties from AST output', function () {
         }
       }
     });
-    var purified = espurify(ast);
+    const purified = espurify(ast);
 
     assert.deepEqual(ast, {
       type: 'Program',
@@ -268,8 +268,8 @@ describe('eliminate extra properties from AST output', function () {
 });
 
 it('RegExpLiteral', function () {
-  var ast = esprima.parse('var re = /^foo$/im', {tolerant: true, tokens: true, range: true, raw: true});
-  var expected = {
+  const ast = esprima.parse('var re = /^foo$/im', { tolerant: true, tokens: true, range: true, raw: true });
+  const expected = {
     type: 'Program',
     sourceType: 'script',
     body: [
@@ -296,13 +296,13 @@ it('RegExpLiteral', function () {
       }
     ]
   };
-  var purified = espurify(ast);
+  const purified = espurify(ast);
   assert.deepEqual(purified, expected);
 });
 
 it('ES6 features', function () {
-  var ast = esprima.parse('evens.map(v => v + 1);', {tolerant: true, tokens: true, range: true, raw: true});
-  var expected = {
+  const ast = esprima.parse('evens.map(v => v + 1);', { tolerant: true, tokens: true, range: true, raw: true });
+  const expected = {
     type: 'Program',
     sourceType: 'script',
     body: [
@@ -353,15 +353,15 @@ it('ES6 features', function () {
       }
     ]
   };
-  var purified = espurify(ast);
+  const purified = espurify(ast);
   assert.deepEqual(purified, expected);
 });
 
 it('ES2017 features', function () {
-  var ast = acorn.parse('async function foo (task) { return await task(); }',
-    {locations: true, ranges: true, ecmaVersion: 2017}
+  const ast = acorn.parse('async function foo (task) { return await task(); }',
+    { locations: true, ranges: true, ecmaVersion: 2017 }
   );
-  var expected = {
+  const expected = {
     type: 'Program',
     sourceType: 'script',
     body: [
@@ -401,15 +401,15 @@ it('ES2017 features', function () {
       }
     ]
   };
-  var purified = espurify(ast);
+  const purified = espurify(ast);
   assert.deepEqual(purified, expected);
 });
 
 it('ES2018 features (for-await-of)', function () {
-  var ast = acorn.parse('async function f() { for await (const x of a()) { assert(x); } }',
-    {locations: true, ranges: true, ecmaVersion: 2018}
+  const ast = acorn.parse('async function f() { for await (const x of a()) { assert(x); } }',
+    { locations: true, ranges: true, ecmaVersion: 2018 }
   );
-  var expected = {
+  const expected = {
     type: 'Program',
     body: [
       {
@@ -477,16 +477,16 @@ it('ES2018 features (for-await-of)', function () {
     ],
     sourceType: 'script'
   };
-  var purified = espurify(ast);
+  const purified = espurify(ast);
   assert.deepEqual(purified, expected);
 });
 
 describe('ES2020 features', function () {
   it('ChainExpression', function () {
-    var ast = acorn.parse('obj.aaa?.bbb()?.ccc();',
-      {locations: true, ranges: true, ecmaVersion: 2020}
+    const ast = acorn.parse('obj.aaa?.bbb()?.ccc();',
+      { locations: true, ranges: true, ecmaVersion: 2020 }
     );
-    var expected = {
+    const expected = {
       type: 'Program',
       body: [
         {
@@ -539,14 +539,14 @@ describe('ES2020 features', function () {
       ],
       sourceType: 'script'
     };
-    var purified = espurify(ast);
+    const purified = espurify(ast);
     assert.deepEqual(purified, expected);
   });
   it('ExportAllDeclaration', function () {
-    var ast = acorn.parse('export * as foo from "mod";',
-      {locations: true, ranges: true, ecmaVersion: 2020, sourceType: 'module'}
+    const ast = acorn.parse('export * as foo from "mod";',
+      { locations: true, ranges: true, ecmaVersion: 2020, sourceType: 'module' }
     );
-    var expected = {
+    const expected = {
       type: 'Program',
       body: [
         {
@@ -563,14 +563,14 @@ describe('ES2020 features', function () {
       ],
       sourceType: 'module'
     };
-    var purified = espurify(ast);
+    const purified = espurify(ast);
     assert.deepEqual(purified, expected);
   });
   it('ImportExpression', function () {
-    var ast = acorn.parse('import(source);',
-      {locations: true, ranges: true, ecmaVersion: 2020, sourceType: 'module'}
+    const ast = acorn.parse('import(source);',
+      { locations: true, ranges: true, ecmaVersion: 2020, sourceType: 'module' }
     );
-    var expected = {
+    const expected = {
       type: 'Program',
       body: [
         {
@@ -586,14 +586,14 @@ describe('ES2020 features', function () {
       ],
       sourceType: 'module'
     };
-    var purified = espurify(ast);
+    const purified = espurify(ast);
     assert.deepEqual(purified, expected);
   });
   it('BigInt literal', function () {
-    var ast = acorn.parse('9007199254740991n;',
-      {locations: true, ranges: true, ecmaVersion: 2020}
+    const ast = acorn.parse('9007199254740991n;',
+      { locations: true, ranges: true, ecmaVersion: 2020 }
     );
-    var expected = {
+    const expected = {
       type: 'Program',
       body: [
         {
@@ -607,16 +607,16 @@ describe('ES2020 features', function () {
       ],
       sourceType: 'script'
     };
-    var purified = espurify(ast);
+    const purified = espurify(ast);
     assert.deepEqual(purified, expected);
   });
 });
 
 function traverse (object, currentKey, visitor) {
-  var key, child;
+  let key, child;
   visitor(object, currentKey);
   for (key in object) {
-    if (object.hasOwnProperty(key)) {
+    if (Object.prototype.hasOwnProperty.call(object, key)) {
       child = object[key];
       if (typeof child === 'object' && child !== null) {
         traverse(child, key, visitor);
@@ -627,8 +627,8 @@ function traverse (object, currentKey, visitor) {
 
 describe('cloneWithWhitelist', function () {
   beforeEach(function () {
-    var code = fs.readFileSync(path.join(__dirname, 'fixtures', 'CounterContainer.jsx'), 'utf8');
-    var babelAst = babylon.parse(code, {
+    const code = fs.readFileSync(path.join(__dirname, 'fixtures', 'CounterContainer.jsx'), 'utf8');
+    const babelAst = babylon.parse(code, {
       sourceType: 'module',
       plugins: [
         'classProperties',
@@ -639,12 +639,12 @@ describe('cloneWithWhitelist', function () {
     this.ast = babelAst.program;
   });
   it('complete whitelist', function () {
-    var astWhiteList = Object.keys(babelTypes.BUILDER_KEYS).reduce(function (props, key) {
+    const astWhiteList = Object.keys(babelTypes.BUILDER_KEYS).reduce(function (props, key) {
       props[key] = ['type'].concat(babelTypes.BUILDER_KEYS[key]);
       return props;
     }, {});
-    var purifyAst = espurify.cloneWithWhitelist(astWhiteList);
-    var purified = purifyAst(this.ast);
+    const purifyAst = espurify.cloneWithWhitelist(astWhiteList);
+    const purified = purifyAst(this.ast);
     traverse(purified, null, function (node, key) {
       assert.notEqual(key, 'loc');
       assert.notEqual(key, 'start');
@@ -652,8 +652,8 @@ describe('cloneWithWhitelist', function () {
     });
   });
   it('babel.types.BUILDER_KEYS', function () {
-    var purifyAst = espurify.cloneWithWhitelist(babelTypes.BUILDER_KEYS);
-    var purified = purifyAst(this.ast);
+    const purifyAst = espurify.cloneWithWhitelist(babelTypes.BUILDER_KEYS);
+    const purified = purifyAst(this.ast);
     traverse(purified, null, function (node, key) {
       assert.notEqual(key, 'loc');
       assert.notEqual(key, 'start');
@@ -663,8 +663,8 @@ describe('cloneWithWhitelist', function () {
 });
 
 it('should not break when the same object instance is referenced twice', function () {
-  var loc = { start: { line: 4, column: 0 }, end: { line: 4, column: 9 } };
-  var root = {
+  const loc = { start: { line: 4, column: 0 }, end: { line: 4, column: 9 } };
+  const root = {
     type: 'Program',
     sourceType: 'script',
     body: [
@@ -679,7 +679,7 @@ it('should not break when the same object instance is referenced twice', functio
     ]
   };
 
-  var clone = espurify.customize({extra: ['loc']});
+  const clone = espurify.customize({ extra: ['loc'] });
   assert.deepEqual(clone(root), {
     type: 'Program',
     sourceType: 'script',
@@ -698,31 +698,31 @@ it('should not break when the same object instance is referenced twice', functio
 
 describe('dealing with circular references in AST', function () {
   it('circular references in standard node tree', function () {
-    var ident = {
+    const ident = {
       type: 'Identifier',
       name: 'assert'
     };
-    var literal = {
+    const literal = {
       type: 'Literal',
       value: 'foo',
       raw: '"foo"'
     };
-    var callExp = {
+    const callExp = {
       type: 'CallExpression',
       callee: ident,
-      arguments: [ literal ]
+      arguments: [literal]
     };
     ident.parent = callExp;
     literal.parent = callExp;
-    var expStmt = {
+    const expStmt = {
       type: 'ExpressionStatement',
       expression: callExp
     };
     callExp.parent = expStmt;
-    var program = {
+    const program = {
       type: 'Program',
       sourceType: 'script',
-      body: [ expStmt ],
+      body: [expStmt],
       errors: []
     };
     expStmt.parent = program;
@@ -752,35 +752,35 @@ describe('dealing with circular references in AST', function () {
   });
 
   it('circular references in non-standard node tree', function () {
-    var key0 = {
+    const key0 = {
       type: 'Identifier',
       name: 'qty'
     };
-    var value0 = {
+    const value0 = {
       type: 'NumberTypeAnnotation'
     };
-    var prop0 = {
+    const prop0 = {
       type: 'ObjectTypeProperty',
       key: key0,
       value: value0
     };
     key0.parent = prop0;
     value0.parent = prop0;
-    var key1 = {
+    const key1 = {
       type: 'Identifier',
       name: 'total'
     };
-    var value1 = {
+    const value1 = {
       type: 'NumberTypeAnnotation'
     };
-    var prop1 = {
+    const prop1 = {
       type: 'ObjectTypeProperty',
       key: key1,
       value: value1
     };
     key1.parent = prop1;
     value1.parent = prop1;
-    var right = {
+    const right = {
       type: 'ObjectTypeAnnotation',
       properties: [
         prop0,
@@ -791,15 +791,15 @@ describe('dealing with circular references in AST', function () {
     };
     prop0.parent = right;
     prop1.parent = right;
-    var id = {
+    const id = {
       type: 'Identifier',
       name: 'CounterContainerStateType'
     };
-    var root = {type: 'TypeAlias', id, typeParameters: null, right};
+    const root = { type: 'TypeAlias', id, typeParameters: null, right };
     id.parent = root;
     right.parent = root;
 
-    var expected = {
+    const expected = {
       type: 'TypeAlias',
       id: {
         type: 'Identifier',

@@ -1,13 +1,13 @@
-var espurify = require('..');
-var esprima = require('esprima');
-var assert = require('assert');
+const espurify = require('..');
+const esprima = require('esprima');
+const assert = require('assert');
 
 describe('espurify.customize', function () {
-  var ast = esprima.parse('assert("foo")', {tolerant: true, tokens: true, loc: true, range: true, raw: true});
+  const ast = esprima.parse('assert("foo")', { tolerant: true, tokens: true, loc: true, range: true, raw: true });
 
   it('default', function () {
-    var clone = espurify.customize();
-    var purified = clone(ast);
+    const clone = espurify.customize();
+    const purified = clone(ast);
     assert.deepEqual(purified, {
       type: 'Program',
       sourceType: 'script',
@@ -33,8 +33,8 @@ describe('espurify.customize', function () {
   });
 
   it('raw', function () {
-    var clone = espurify.customize({extra: ['raw']});
-    var purified = clone(ast);
+    const clone = espurify.customize({ extra: ['raw'] });
+    const purified = clone(ast);
     assert.deepEqual(purified, {
       type: 'Program',
       sourceType: 'script',
@@ -61,8 +61,8 @@ describe('espurify.customize', function () {
   });
 
   it('loc', function () {
-    var clone = espurify.customize({extra: ['loc']});
-    var purified = clone(ast);
+    const clone = espurify.customize({ extra: ['loc'] });
+    const purified = clone(ast);
     assert.deepEqual(purified, {
       type: 'Program',
       sourceType: 'script',
@@ -139,8 +139,8 @@ describe('espurify.customize', function () {
   });
 
   it('range', function () {
-    var clone = espurify.customize({extra: ['range']});
-    var purified = clone(ast);
+    const clone = espurify.customize({ extra: ['range'] });
+    const purified = clone(ast);
     assert.deepEqual(purified, {
       type: 'Program',
       sourceType: 'script',
@@ -186,9 +186,9 @@ describe('espurify.customize', function () {
   });
 
   it('loc, range, raw', function () {
-    var clone = espurify.customize({extra: ['loc', 'range', 'raw']});
-    var purified = clone(ast);
-    var expected = {
+    const clone = espurify.customize({ extra: ['loc', 'range', 'raw'] });
+    const purified = clone(ast);
+    const expected = {
       type: 'Program',
       sourceType: 'script',
       body: [

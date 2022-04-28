@@ -24,9 +24,9 @@
     "babylon": "^6.3.20",
     "esprima": "^4.0.0",
     "estraverse": "^5.0.0",
-    "mocha": "^8.0.0",
-    "semistandard": "^14.0.0",
-    "snazzy": "^8.0.0"
+    "mocha": "^9.0.0",
+    "semistandard": "^16.0.0",
+    "snazzy": "^9.0.0"
   },
   "files": [
     "CHANGELOG.md",
