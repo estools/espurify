@@ -16,7 +16,11 @@ function createCloneFunction (options) {
   return cloneWithAllowlist(createAllowlist(options));
 }
 
+/**
+ * @deprecated since version 3.0.0. Use `espurify.purifyAst` instead.
+ */
 const espurify = createCloneFunction();
+espurify.purifyAst = createCloneFunction();
 espurify.customize = createCloneFunction;
 espurify.cloneWithAllowlist = cloneWithAllowlist;
 /**
