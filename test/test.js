@@ -280,7 +280,7 @@ function traverse (object, currentKey, visitor) {
   }
 }
 
-describe('cloneWithWhitelist', function () {
+describe('cloneWithAllowlist', function () {
   let ast;
   beforeEach(function () {
     const code = fs.readFileSync(path.join(__dirname, 'fixtures', 'CounterContainer.jsx'), 'utf8');
@@ -294,12 +294,12 @@ describe('cloneWithWhitelist', function () {
     });
     ast = babelAst.program;
   });
-  it('complete whitelist', function () {
-    const astWhiteList = Object.keys(babelTypes.BUILDER_KEYS).reduce(function (props, key) {
+  it('complete allowlist', function () {
+    const astAllowList = Object.keys(babelTypes.BUILDER_KEYS).reduce(function (props, key) {
       props[key] = ['type'].concat(babelTypes.BUILDER_KEYS[key]);
       return props;
     }, {});
-    const purifyAst = espurify.cloneWithWhitelist(astWhiteList);
+    const purifyAst = espurify.cloneWithAllowlist(astAllowList);
     const purified = purifyAst(ast);
     traverse(purified, null, function (node, key) {
       assert.notEqual(key, 'loc');
@@ -308,7 +308,7 @@ describe('cloneWithWhitelist', function () {
     });
   });
   it('babel.types.BUILDER_KEYS', function () {
-    const purifyAst = espurify.cloneWithWhitelist(babelTypes.BUILDER_KEYS);
+    const purifyAst = espurify.cloneWithAllowlist(babelTypes.BUILDER_KEYS);
     const purified = purifyAst(ast);
     traverse(purified, null, function (node, key) {
       assert.notEqual(key, 'loc');
