@@ -3,6 +3,81 @@ const assert = require('assert');
 const acorn = require('acorn');
 
 describe('ecmaVersion option', function () {
+  describe('es2022', function () {
+    it('PropertyDefinition, PrivateIdentifier and StaticBlock', function () {
+      const clone = espurify.customize({ ecmaVersion: 2022 });
+      const code = `
+class Foo {
+  static #bar;
+  static {
+    this.#bar = 'baz';
+  }
+}
+`;
+      const ast = acorn.parse(code, { locations: true, ranges: true, ecmaVersion: 2022 });
+      const expected = {
+        type: 'Program',
+        body: [
+          {
+            type: 'ClassDeclaration',
+            id: {
+              type: 'Identifier',
+              name: 'Foo'
+            },
+            superClass: null,
+            body: {
+              type: 'ClassBody',
+              body: [
+                {
+                  type: 'PropertyDefinition',
+                  key: {
+                    type: 'PrivateIdentifier',
+                    name: 'bar'
+                  },
+                  value: null,
+                  computed: false,
+                  static: true
+                },
+                {
+                  type: 'StaticBlock',
+                  body: [
+                    {
+                      type: 'ExpressionStatement',
+                      expression: {
+                        type: 'AssignmentExpression',
+                        operator: '=',
+                        left: {
+                          type: 'MemberExpression',
+                          object: {
+                            type: 'ThisExpression'
+                          },
+                          property: {
+                            name: 'bar',
+                            type: 'PrivateIdentifier'
+                          },
+                          computed: false,
+                          optional: false
+                        },
+                        right: {
+                          type: 'Literal',
+                          value: 'baz'
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        sourceType: 'script'
+      };
+      assert.deepEqual(clone(ast), expected);
+      const clone2021 = espurify.customize({ ecmaVersion: 2021 });
+      assert.notDeepEqual(clone2021(ast), expected);
+    });
+  });
+
   describe('es2020', function () {
     it('ChainExpression', function () {
       const clone = espurify.customize({ ecmaVersion: 2020 });
