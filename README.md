@@ -12,7 +12,8 @@ Clone AST without extra properties
 API
 ---------------------------------------
 
-### const purifiedAstClone = espurify(originalAst)
+### const purifiedAstClone = espurify.purifyAst(originalAst)
+(note: using `espurify` as a default exported function is deprecated in favor of named exports aiming ESM era, and will be removed from future releases)
 
 Returns new clone of `originalAst` but without extra properties.
 
@@ -102,7 +103,7 @@ EXAMPLE
 ---------------------------------------
 
 ```javascript
-const espurify = require('.');
+const espurify = require('espurify');
 const estraverse = require('estraverse');
 const acorn = require('acorn');
 const syntax = estraverse.Syntax;
@@ -128,7 +129,7 @@ estraverse.replace(originalAst, {
 
 
 // purify AST
-const purifiedClone = espurify(originalAst);
+const purifiedClone = espurify.purifyAst(originalAst);
 
 
 // Extra properties are eliminated from cloned AST

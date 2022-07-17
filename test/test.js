@@ -37,7 +37,7 @@ describe('eliminate extra properties from AST output', function () {
 
   it('eliminate tokens and raw', function () {
     const ast = esprima.parse('assert("foo")', { tolerant: true, tokens: true, raw: true });
-    const purified = espurify(ast);
+    const purified = espurify.purifyAst(ast);
 
     assert.deepEqual(ast, {
       type: 'Program',
@@ -87,7 +87,7 @@ describe('eliminate extra properties from AST output', function () {
 
   it('eliminate range', function () {
     const ast = esprima.parse('assert("foo")', { tolerant: true, range: true });
-    const purified = espurify(ast);
+    const purified = espurify.purifyAst(ast);
     assert.deepEqual(ast, {
       type: 'Program',
       sourceType: 'script',
@@ -137,7 +137,7 @@ describe('eliminate extra properties from AST output', function () {
 
   it('eliminate loc', function () {
     const ast = esprima.parse('assert("foo")', { tolerant: true, loc: true });
-    const purified = espurify(ast);
+    const purified = espurify.purifyAst(ast);
 
     assert.deepEqual(ast, {
       type: 'Program',
@@ -232,7 +232,7 @@ describe('eliminate extra properties from AST output', function () {
         }
       }
     });
-    const purified = espurify(ast);
+    const purified = espurify.purifyAst(ast);
 
     assert.deepEqual(ast, {
       type: 'Program',
@@ -383,7 +383,7 @@ describe('dealing with circular references in AST', function () {
     };
     expStmt.parent = program;
 
-    assert.deepEqual(espurify(program), {
+    assert.deepEqual(espurify.purifyAst(program), {
       type: 'Program',
       sourceType: 'script',
       body: [
@@ -496,6 +496,6 @@ describe('dealing with circular references in AST', function () {
     expected.right.properties[1].parent = expected.right;
     expected.right.properties[1].value.parent = expected.right.properties[1];
 
-    assert.deepEqual(espurify(root), expected);
+    assert.deepEqual(espurify.purifyAst(root), expected);
   });
 });
