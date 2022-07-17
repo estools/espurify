@@ -1,3 +1,49 @@
+## [3.0.0](https://github.com/estools/espurify/releases/tag/v3.0.0) (2022-07-17)
+
+
+#### Features
+
+* [Provide ecmaVersion option to make cloned AST conform to each annual estree spec](https://github.com/estools/espurify/pull/26)
+  * set default ecmaVersion to 2022
+
+* [Rename all WhiteList to AllowList in favor of more inclusive language](https://github.com/estools/espurify/pull/27)
+
+* [Support ES2022 grammar](https://github.com/estools/espurify/commit/f80cfb6f2cc0a44ea4d971312bb52ce449b4c070)
+  * support PropertyDefinition
+  * support PrivateIdentifier
+  * support StaticBlock
+
+* [Support ES2020 grammar](https://github.com/estools/espurify/pull/21)
+  * support ChainExpression
+  * support ImportExpression
+  * support exported property of ExportAllDeclaration
+  * support BigInt literals
+
+
+#### Breaking Changes
+
+This release will not affect most users. Just Two may-affect changes below.
+
+1. Some properties will appear to purified AST since default ecmaVersion is changed from 2018 to 2022 which added some properties to existing Nodes, may affect tree deep-equality.
+
+```diff
+-  CallExpression: ['type', 'callee', 'arguments'],
++  CallExpression: ['type', 'callee', 'arguments', 'optional'],
+-  ExportAllDeclaration: ['type', 'source'],
++  ExportAllDeclaration: ['type', 'source', 'exported'],
+-  Literal: ['type', 'value', 'regex'],
++  Literal: ['type', 'value', 'regex', 'bigint'],
+```
+
+To make espurify's behavior same as v2, please use `espurify.customize` function with `ecmaVersion: 2018` option.
+```
+const purify = espurify.customize({ ecmaVersion: 2018 });
+const clonedAst = purify(originalAst);
+```
+
+2. `espurify.cloneWithWhitelist` is still exported but deprecated in favor of more inclusive language and will be removed from future releases.
+
+
 ### [2.1.1](https://github.com/estools/espurify/releases/tag/v2.1.1) (2021-03-29)
 
 

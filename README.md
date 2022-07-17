@@ -32,7 +32,7 @@ Leaves properties defined in [The ESTree Spec](https://github.com/estree/estree)
 
 
 ### const customizedCloneFunctionWithAllowList = espurify.cloneWithAllowlist(allowList)
-(note: `espurify.cloneWithWhitelist` is deprecated in favor of more inclusive language)
+(note: `espurify.cloneWithWhitelist` is still exported but deprecated in favor of more inclusive language and will be removed from future releases)
 
 Returns customized function for cloning AST, with user-provided `allowList`.
 
