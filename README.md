@@ -13,11 +13,12 @@ API
 ---------------------------------------
 
 ### const purifiedAstClone = espurify.purifyAst(originalAst)
-(note: using `espurify` as a default exported function is deprecated in favor of named exports aiming ESM era, and will be removed from future releases)
 
 Returns new clone of `originalAst` but without extra properties.
 
 Leaves properties defined in [The ESTree Spec](https://github.com/estree/estree) (formerly known as [Mozilla SpiderMonkey Parser API](https://speakerdeck.com/michaelficarra/spidermonkey-parser-api-a-standard-for-structured-js-representations)) only. Also note that extra informations (such as `loc`, `range` and `raw`) are eliminated too.
+
+(note: using `espurify` as a default exported function is deprecated in favor of named exports aiming ESM era, and will be removed in future major releases)
 
 #### Supported ECMAScript versions
 
@@ -33,10 +34,10 @@ Leaves properties defined in [The ESTree Spec](https://github.com/estree/estree)
 
 
 ### const customizedCloneFunctionWithAllowList = espurify.cloneWithAllowlist(allowList)
-(note: `espurify.cloneWithWhitelist` is still exported but deprecated in favor of more inclusive language and will be removed from future releases)
 
 Returns customized function for cloning AST, with user-provided `allowList`.
 
+(note: `espurify.cloneWithWhitelist` is still exported but deprecated in favor of more inclusive language and will be removed in future major releases)
 
 ### const purifiedAstClone = customizedCloneFunctionWithAllowList(originalAst)
 
