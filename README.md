@@ -31,23 +31,24 @@ Leaves properties defined in [The ESTree Spec](https://github.com/estree/estree)
 - [ES2022](https://github.com/estree/estree/blob/master/es2022.md)
 
 
-### const customizedCloneFunctionWithWhiteList = espurify.cloneWithWhitelist(whiteList)
+### const customizedCloneFunctionWithAllowList = espurify.cloneWithAllowlist(allowList)
+(note: `espurify.cloneWithWhitelist` is deprecated in favor of more inclusive language)
 
-Returns customized function for cloning AST, with user-provided `whiteList`.
+Returns customized function for cloning AST, with user-provided `allowList`.
 
 
-### const purifiedAstClone = customizedCloneFunctionWithWhiteList(originalAst)
+### const purifiedAstClone = customizedCloneFunctionWithAllowList(originalAst)
 
 Returns new clone of `originalAst` by customized function.
 
 
-#### whiteList
+#### allowList
 
 | type     | default value |
 |:---------|:--------------|
 | `object` | N/A           |
 
-`whiteList` is an object containing NodeType as keys and properties as values.
+`allowList` is an object containing NodeType as keys and properties as values.
 
 ```js
 {
