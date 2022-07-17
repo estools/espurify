@@ -12,7 +12,7 @@ Clone AST without extra properties
 API
 ---------------------------------------
 
-### var purifiedAstClone = espurify(originalAst)
+### const purifiedAstClone = espurify(originalAst)
 
 Returns new clone of `originalAst` but without extra properties.
 
@@ -26,14 +26,17 @@ Leaves properties defined in [The ESTree Spec](https://github.com/estree/estree)
 - [ES2017](https://github.com/estree/estree/blob/master/es2017.md)
 - [ES2018](https://github.com/estree/estree/blob/master/es2018.md)
 - [ES2019](https://github.com/estree/estree/blob/master/es2019.md)
+- [ES2020](https://github.com/estree/estree/blob/master/es2020.md)
+- [ES2021](https://github.com/estree/estree/blob/master/es2021.md)
+- [ES2022](https://github.com/estree/estree/blob/master/es2022.md)
 
 
-### var customizedCloneFunctionWithWhiteList = espurify.cloneWithWhitelist(whiteList)
+### const customizedCloneFunctionWithWhiteList = espurify.cloneWithWhitelist(whiteList)
 
 Returns customized function for cloning AST, with user-provided `whiteList`.
 
 
-### var purifiedAstClone = customizedCloneFunctionWithWhiteList(originalAst)
+### const purifiedAstClone = customizedCloneFunctionWithWhiteList(originalAst)
 
 Returns new clone of `originalAst` by customized function.
 
@@ -56,12 +59,12 @@ Returns new clone of `originalAst` by customized function.
 ```
 
 
-### var customizedCloneFunction = espurify.customize(options)
+### const customizedCloneFunction = espurify.customize(options)
 
 Returns customized function for cloning AST, configured by custom `options`.
 
 
-### var purifiedAstClone = customizedCloneFunction(originalAst)
+### const purifiedAstClone = customizedCloneFunction(originalAst)
 
 Returns new clone of `originalAst` by customized function.
 
@@ -74,6 +77,15 @@ Returns new clone of `originalAst` by customized function.
 | `object` | `{}`          |
 
 Configuration options. If not passed, default options will be used.
+
+
+#### options.ecmaVersion
+
+| type                 | default value |
+|:---------------------|:--------------|
+| `string` or `number` | `2022`        |
+
+Indicates the ECMAScript version to clone. Must be either 5, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022.
 
 
 #### options.extra
@@ -89,37 +101,37 @@ EXAMPLE
 ---------------------------------------
 
 ```javascript
-var espurify = require('espurify'),
-    estraverse = require('estraverse'),
-    esprima = require('esprima'),
-    syntax = estraverse.Syntax,
-    assert = require('assert');
+const espurify = require('.');
+const estraverse = require('estraverse');
+const acorn = require('acorn');
+const syntax = estraverse.Syntax;
+const assert = require('assert');
 
-var jsCode = 'assert("foo")';
+const jsCode = 'assert("foo")';
 
 // Adding extra informations to AST
-var originalAst = esprima.parse(jsCode, {tolerant: true, loc: true, raw: true});
+const originalAst = acorn.parse(jsCode, { locations: true, ranges: true, ecmaVersion: 2022 });
 estraverse.replace(originalAst, {
-    leave: function (currentNode, parentNode) {
-        if (currentNode.type === syntax.Literal && typeof currentNode.raw !== 'undefined') {
-            currentNode['x-verbatim-bar'] = {
-                content : currentNode.raw,
-                precedence : 18  // escodegen.Precedence.Primary
-            };
-            return currentNode;
-        } else {
-            return undefined;
-        }
+  leave: function (currentNode, parentNode) {
+    if (currentNode.type === syntax.Literal && typeof currentNode.raw !== 'undefined') {
+      currentNode['x-verbatim-bar'] = {
+        content : currentNode.raw,
+        precedence : 18  // escodegen.Precedence.Primary
+      };
+      return currentNode;
+    } else {
+      return undefined;
     }
+  }
 });
 
 
 // purify AST
-var purifiedClone = espurify(originalAst);
+const purifiedClone = espurify(originalAst);
 
 
-// original AST is not modified
-assert.deepEqual(originalAst, {
+// Extra properties are eliminated from cloned AST
+assert.deepEqual(purifiedClone, {
   type: 'Program',
   body: [
     {
@@ -128,62 +140,27 @@ assert.deepEqual(originalAst, {
         type: 'CallExpression',
         callee: {
           type: 'Identifier',
-          name: 'assert',
-          loc: {
-            start: {
-              line: 1,
-              column: 0
-            },
-            end: {
-              line: 1,
-              column: 6
-            }
-          }
+          name: 'assert'
         },
         arguments: [
           {
             type: 'Literal',
-            value: 'foo',
-            raw: '"foo"',
-            loc: {
-              start: {
-                line: 1,
-                column: 7
-              },
-              end: {
-                line: 1,
-                column: 12
-              }
-            },
-            "x-verbatim-bar": {
-              content: '"foo"',
-              precedence: 18
-            }
+            value: 'foo'
           }
         ],
-        loc: {
-          start: {
-            line: 1,
-            column: 0
-          },
-          end: {
-            line: 1,
-            column: 13
-          }
-        }
-      },
-      loc: {
-        start: {
-          line: 1,
-          column: 0
-        },
-        end: {
-          line: 1,
-          column: 13
-        }
+        optional: false
       }
     }
   ],
+  sourceType: 'script'
+});
+
+
+// original AST is not modified
+assert.deepEqual(originalAst,{
+  type: 'Program',
+  start: 0,
+  end: 13,
   loc: {
     start: {
       line: 1,
@@ -194,31 +171,99 @@ assert.deepEqual(originalAst, {
       column: 13
     }
   },
-  errors: []
-});
-
-
-// Extra properties are eliminated from cloned AST
-assert.deepEqual(purifiedClone, {
-    type: 'Program',
-    body: [
-        {
-            type: 'ExpressionStatement',
-            expression: {
-                type: 'CallExpression',
-                callee: {
-                    type: 'Identifier',
-                    name: 'assert'
-                },
-                arguments: [
-                    {
-                        type: 'Literal',
-                        value: 'foo'
-                    }
-                ]
-            }
+  range: [
+    0,
+    13
+  ],
+  body: [
+    {
+      type: 'ExpressionStatement',
+      start: 0,
+      end: 13,
+      loc: {
+        start: {
+          line: 1,
+          column: 0
+        },
+        end: {
+          line: 1,
+          column: 13
         }
-    ]
+      },
+      range: [
+        0,
+        13
+      ],
+      expression: {
+        type: 'CallExpression',
+        start: 0,
+        end: 13,
+        loc: {
+          start: {
+            line: 1,
+            column: 0
+          },
+          end: {
+            line: 1,
+            column: 13
+          }
+        },
+        range: [
+          0,
+          13
+        ],
+        callee: {
+          type: 'Identifier',
+          start: 0,
+          end: 6,
+          loc: {
+            start: {
+              line: 1,
+              column: 0
+            },
+            end: {
+              line: 1,
+              column: 6
+            }
+          },
+          range: [
+            0,
+            6
+          ],
+          name: 'assert'
+        },
+        arguments: [
+          {
+            type: 'Literal',
+            start: 7,
+            end: 12,
+            loc: {
+              start: {
+                line: 1,
+                column: 7
+              },
+              end: {
+                line: 1,
+                column: 12
+              }
+            },
+            range: [
+              7,
+              12
+            ],
+            value: 'foo',
+            raw: '"foo"',
+            "x-verbatim-bar": {
+              content: '"foo"',
+              precedence: 18
+            }
+          }
+        ],
+        optional: false
+      }
+    }
+  ],
+  sourceType: 'script'
 });
 ```
 
@@ -235,7 +280,7 @@ Install
 Use
 
 ```javascript
-var espurify = require('espurify');
+const espurify = require('espurify');
 ```
 
 

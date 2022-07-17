@@ -1,6 +1,5 @@
 const espurify = require('..');
 const esprima = require('esprima');
-const acorn = require('acorn');
 const estraverse = require('estraverse');
 const babelTypes = require('babel-types');
 const babylon = require('babylon');
@@ -10,8 +9,9 @@ const syntax = estraverse.Syntax;
 const assert = require('assert');
 
 describe('eliminate extra properties from AST output', function () {
-  beforeEach(function () {
-    this.expected = {
+  let expected;
+  beforeEach(() => {
+    expected = {
       type: 'Program',
       sourceType: 'script',
       body: [
@@ -82,7 +82,7 @@ describe('eliminate extra properties from AST output', function () {
       errors: []
     });
 
-    assert.deepEqual(purified, this.expected);
+    assert.deepEqual(purified, expected);
   });
 
   it('eliminate range', function () {
@@ -132,7 +132,7 @@ describe('eliminate extra properties from AST output', function () {
       ],
       errors: []
     });
-    assert.deepEqual(purified, this.expected);
+    assert.deepEqual(purified, expected);
   });
 
   it('eliminate loc', function () {
@@ -214,7 +214,7 @@ describe('eliminate extra properties from AST output', function () {
       errors: []
     });
 
-    assert.deepEqual(purified, this.expected);
+    assert.deepEqual(purified, expected);
   });
 
   it('eliminate custom property', function () {
@@ -263,351 +263,6 @@ describe('eliminate extra properties from AST output', function () {
       errors: []
     });
 
-    assert.deepEqual(purified, this.expected);
-  });
-});
-
-it('RegExpLiteral', function () {
-  const ast = esprima.parse('var re = /^foo$/im', { tolerant: true, tokens: true, range: true, raw: true });
-  const expected = {
-    type: 'Program',
-    sourceType: 'script',
-    body: [
-      {
-        type: 'VariableDeclaration',
-        declarations: [
-          {
-            type: 'VariableDeclarator',
-            id: {
-              type: 'Identifier',
-              name: 're'
-            },
-            init: {
-              type: 'Literal',
-              value: /^foo$/im,
-              regex: {
-                pattern: '^foo$',
-                flags: 'im'
-              }
-            }
-          }
-        ],
-        kind: 'var'
-      }
-    ]
-  };
-  const purified = espurify(ast);
-  assert.deepEqual(purified, expected);
-});
-
-it('ES6 features', function () {
-  const ast = esprima.parse('evens.map(v => v + 1);', { tolerant: true, tokens: true, range: true, raw: true });
-  const expected = {
-    type: 'Program',
-    sourceType: 'script',
-    body: [
-      {
-        type: 'ExpressionStatement',
-        expression: {
-          type: 'CallExpression',
-          callee: {
-            type: 'MemberExpression',
-            computed: false,
-            object: {
-              type: 'Identifier',
-              name: 'evens'
-            },
-            property: {
-              type: 'Identifier',
-              name: 'map'
-            }
-          },
-          arguments: [
-            {
-              type: 'ArrowFunctionExpression',
-              id: null,
-              params: [
-                {
-                  type: 'Identifier',
-                  name: 'v'
-                }
-              ],
-              body: {
-                type: 'BinaryExpression',
-                operator: '+',
-                left: {
-                  type: 'Identifier',
-                  name: 'v'
-                },
-                right: {
-                  type: 'Literal',
-                  value: 1
-                }
-              },
-              generator: false,
-              async: false,
-              expression: true
-            }
-          ]
-        }
-      }
-    ]
-  };
-  const purified = espurify(ast);
-  assert.deepEqual(purified, expected);
-});
-
-it('ES2017 features', function () {
-  const ast = acorn.parse('async function foo (task) { return await task(); }',
-    { locations: true, ranges: true, ecmaVersion: 2017 }
-  );
-  const expected = {
-    type: 'Program',
-    sourceType: 'script',
-    body: [
-      {
-        type: 'FunctionDeclaration',
-        id: {
-          name: 'foo',
-          type: 'Identifier'
-        },
-        params: [
-          {
-            name: 'task',
-            type: 'Identifier'
-          }
-        ],
-        body: {
-          type: 'BlockStatement',
-          body: [
-            {
-              type: 'ReturnStatement',
-              argument: {
-                type: 'AwaitExpression',
-                argument: {
-                  type: 'CallExpression',
-                  callee: {
-                    name: 'task',
-                    type: 'Identifier'
-                  },
-                  arguments: []
-                }
-              }
-            }
-          ]
-        },
-        generator: false,
-        async: true
-      }
-    ]
-  };
-  const purified = espurify(ast);
-  assert.deepEqual(purified, expected);
-});
-
-it('ES2018 features (for-await-of)', function () {
-  const ast = acorn.parse('async function f() { for await (const x of a()) { assert(x); } }',
-    { locations: true, ranges: true, ecmaVersion: 2018 }
-  );
-  const expected = {
-    type: 'Program',
-    body: [
-      {
-        type: 'FunctionDeclaration',
-        id: {
-          type: 'Identifier',
-          name: 'f'
-        },
-        params: [],
-        body: {
-          type: 'BlockStatement',
-          body: [
-            {
-              type: 'ForOfStatement',
-              await: true,
-              left: {
-                type: 'VariableDeclaration',
-                declarations: [
-                  {
-                    type: 'VariableDeclarator',
-                    id: {
-                      type: 'Identifier',
-                      name: 'x'
-                    },
-                    init: null
-                  }
-                ],
-                kind: 'const'
-              },
-              right: {
-                type: 'CallExpression',
-                callee: {
-                  type: 'Identifier',
-                  name: 'a'
-                },
-                arguments: []
-              },
-              body: {
-                type: 'BlockStatement',
-                body: [
-                  {
-                    type: 'ExpressionStatement',
-                    expression: {
-                      type: 'CallExpression',
-                      callee: {
-                        type: 'Identifier',
-                        name: 'assert'
-                      },
-                      arguments: [
-                        {
-                          type: 'Identifier',
-                          name: 'x'
-                        }
-                      ]
-                    }
-                  }
-                ]
-              }
-            }
-          ]
-        },
-        generator: false,
-        async: true
-      }
-    ],
-    sourceType: 'script'
-  };
-  const purified = espurify(ast);
-  assert.deepEqual(purified, expected);
-});
-
-describe('ES2020 features', function () {
-  it('ChainExpression', function () {
-    const ast = acorn.parse('obj.aaa?.bbb()?.ccc();',
-      { locations: true, ranges: true, ecmaVersion: 2020 }
-    );
-    const expected = {
-      type: 'Program',
-      body: [
-        {
-          type: 'ExpressionStatement',
-          expression: {
-            type: 'ChainExpression',
-            expression: {
-              type: 'CallExpression',
-              callee: {
-                type: 'MemberExpression',
-                object: {
-                  type: 'CallExpression',
-                  callee: {
-                    type: 'MemberExpression',
-                    object: {
-                      type: 'MemberExpression',
-                      object: {
-                        type: 'Identifier',
-                        name: 'obj'
-                      },
-                      property: {
-                        type: 'Identifier',
-                        name: 'aaa'
-                      },
-                      computed: false,
-                      optional: false
-                    },
-                    property: {
-                      type: 'Identifier',
-                      name: 'bbb'
-                    },
-                    computed: false,
-                    optional: true
-                  },
-                  arguments: [],
-                  optional: false
-                },
-                property: {
-                  type: 'Identifier',
-                  name: 'ccc'
-                },
-                computed: false,
-                optional: true
-              },
-              arguments: [],
-              optional: false
-            }
-          }
-        }
-      ],
-      sourceType: 'script'
-    };
-    const purified = espurify(ast);
-    assert.deepEqual(purified, expected);
-  });
-  it('ExportAllDeclaration', function () {
-    const ast = acorn.parse('export * as foo from "mod";',
-      { locations: true, ranges: true, ecmaVersion: 2020, sourceType: 'module' }
-    );
-    const expected = {
-      type: 'Program',
-      body: [
-        {
-          type: 'ExportAllDeclaration',
-          source: {
-            type: 'Literal',
-            value: 'mod'
-          },
-          exported: {
-            type: 'Identifier',
-            name: 'foo'
-          }
-        }
-      ],
-      sourceType: 'module'
-    };
-    const purified = espurify(ast);
-    assert.deepEqual(purified, expected);
-  });
-  it('ImportExpression', function () {
-    const ast = acorn.parse('import(source);',
-      { locations: true, ranges: true, ecmaVersion: 2020, sourceType: 'module' }
-    );
-    const expected = {
-      type: 'Program',
-      body: [
-        {
-          type: 'ExpressionStatement',
-          expression: {
-            type: 'ImportExpression',
-            source: {
-              type: 'Identifier',
-              name: 'source'
-            }
-          }
-        }
-      ],
-      sourceType: 'module'
-    };
-    const purified = espurify(ast);
-    assert.deepEqual(purified, expected);
-  });
-  it('BigInt literal', function () {
-    const ast = acorn.parse('9007199254740991n;',
-      { locations: true, ranges: true, ecmaVersion: 2020 }
-    );
-    const expected = {
-      type: 'Program',
-      body: [
-        {
-          type: 'ExpressionStatement',
-          expression: {
-            type: 'Literal',
-            value: 9007199254740991n,
-            bigint: '9007199254740991'
-          }
-        }
-      ],
-      sourceType: 'script'
-    };
-    const purified = espurify(ast);
     assert.deepEqual(purified, expected);
   });
 });
@@ -626,6 +281,7 @@ function traverse (object, currentKey, visitor) {
 }
 
 describe('cloneWithWhitelist', function () {
+  let ast;
   beforeEach(function () {
     const code = fs.readFileSync(path.join(__dirname, 'fixtures', 'CounterContainer.jsx'), 'utf8');
     const babelAst = babylon.parse(code, {
@@ -636,7 +292,7 @@ describe('cloneWithWhitelist', function () {
         'flow'
       ]
     });
-    this.ast = babelAst.program;
+    ast = babelAst.program;
   });
   it('complete whitelist', function () {
     const astWhiteList = Object.keys(babelTypes.BUILDER_KEYS).reduce(function (props, key) {
@@ -644,7 +300,7 @@ describe('cloneWithWhitelist', function () {
       return props;
     }, {});
     const purifyAst = espurify.cloneWithWhitelist(astWhiteList);
-    const purified = purifyAst(this.ast);
+    const purified = purifyAst(ast);
     traverse(purified, null, function (node, key) {
       assert.notEqual(key, 'loc');
       assert.notEqual(key, 'start');
@@ -653,7 +309,7 @@ describe('cloneWithWhitelist', function () {
   });
   it('babel.types.BUILDER_KEYS', function () {
     const purifyAst = espurify.cloneWithWhitelist(babelTypes.BUILDER_KEYS);
-    const purified = purifyAst(this.ast);
+    const purified = purifyAst(ast);
     traverse(purified, null, function (node, key) {
       assert.notEqual(key, 'loc');
       assert.notEqual(key, 'start');
