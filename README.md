@@ -79,6 +79,15 @@ Returns new clone of `originalAst` by customized function.
 Configuration options. If not passed, default options will be used.
 
 
+#### options.ecmaVersion
+
+| type                 | default value |
+|:---------------------|:--------------|
+| `string` or `number` | `2022`        |
+
+Indicates the ECMAScript version to clone. Must be either 5, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022.
+
+
 #### options.extra
 
 | type                | default value |
