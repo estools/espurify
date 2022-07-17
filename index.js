@@ -19,5 +19,8 @@ function createCloneFunction (options) {
 const espurify = createCloneFunction();
 espurify.customize = createCloneFunction;
 espurify.cloneWithAllowlist = cloneWithAllowlist;
+/**
+ * @deprecated since version 3.0.0. Use `espurify.cloneWithAllowlist` instead.
+ */
 espurify.cloneWithWhitelist = cloneWithAllowlist;
 module.exports = espurify;
