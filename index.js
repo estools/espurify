@@ -3,7 +3,7 @@
  *
  * https://github.com/estools/espurify
  *
- * Copyright (c) 2014-2022 Takuto Wada
+ * Copyright (c) 2014-2024 Takuto Wada
  * Licensed under the MIT license.
  *   https://github.com/estools/espurify/blob/master/MIT-LICENSE.txt
  */
