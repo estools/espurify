@@ -31,6 +31,8 @@ Leaves properties defined in [The ESTree Spec](https://github.com/estree/estree)
 - [ES2020](https://github.com/estree/estree/blob/master/es2020.md)
 - [ES2021](https://github.com/estree/estree/blob/master/es2021.md)
 - [ES2022](https://github.com/estree/estree/blob/master/es2022.md)
+- ES2023
+- ES2024
 
 
 ### const customizedCloneFunctionWithAllowList = espurify.cloneWithAllowlist(allowList)
@@ -88,7 +90,7 @@ Configuration options. If not passed, default options will be used.
 |:---------------------|:--------------|
 | `string` or `number` | `2022`        |
 
-Indicates the ECMAScript version to clone. Must be either 5, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022.
+Indicates the ECMAScript version to clone. Must be either 5, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024.
 
 
 #### options.extra
