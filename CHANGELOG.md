@@ -1,3 +1,11 @@
+## [3.1.0](https://github.com/estools/espurify/releases/tag/v3.1.0) (2024-07-04)
+
+
+#### Features
+
+* Support ES2023 and ES2024 ([a03f0b2e](https://github.com/estools/espurify/commit/a03f0b2e93c3623010c05e609d7d002e4e877a93))
+
+
 ## [3.0.0](https://github.com/estools/espurify/releases/tag/v3.0.0) (2022-07-17)
 
 
