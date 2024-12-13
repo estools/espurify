@@ -24,8 +24,7 @@
     "babylon": "^6.3.20",
     "esprima": "^4.0.0",
     "estraverse": "^5.0.0",
-    "mocha": "^9.0.0",
-    "semistandard": "^16.0.0",
+    "semistandard": "^17.0.0",
     "snazzy": "^9.0.0"
   },
   "files": [
@@ -53,18 +52,13 @@
     "preversion": "npm test",
     "lint": "semistandard --verbose index.js lib test | snazzy",
     "fmt": "semistandard --fix index.js lib test",
-    "test": "npm run lint && mocha test"
+    "test": "npm run lint && node --test"
   },
   "semistandard": {
     "ignore": [
       "/build/",
       "/bench/",
       "**/*.jsx"
-    ],
-    "globals": [
-      "describe",
-      "beforeEach",
-      "it"
     ]
   }
 }

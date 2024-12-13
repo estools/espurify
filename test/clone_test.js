@@ -1,6 +1,7 @@
 const espurify = require('..');
 const esprima = require('esprima');
 const assert = require('assert');
+const { describe, it } = require('node:test');
 
 describe('espurify.customize', function () {
   const ast = esprima.parse('assert("foo")', { tolerant: true, tokens: true, loc: true, range: true, raw: true });

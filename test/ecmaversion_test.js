@@ -1,6 +1,7 @@
 const espurify = require('..');
 const assert = require('assert');
 const acorn = require('acorn');
+const { describe, it } = require('node:test');
 
 describe('ecmaVersion option', function () {
   describe('es2022', function () {
