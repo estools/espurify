@@ -7,6 +7,7 @@ const fs = require('fs');
 const path = require('path');
 const syntax = estraverse.Syntax;
 const assert = require('assert');
+const { describe, it, beforeEach } = require('node:test');
 
 describe('eliminate extra properties from AST output', function () {
   let expected;
