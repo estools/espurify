@@ -52,7 +52,7 @@
     "preversion": "npm test",
     "lint": "semistandard --verbose index.js lib test | snazzy",
     "fmt": "semistandard --fix index.js lib test",
-    "test": "npm run lint && node --test test/"
+    "test": "npm run lint && node --test"
   },
   "semistandard": {
     "ignore": [
