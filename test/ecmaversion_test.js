@@ -4,6 +4,54 @@ const acorn = require('acorn');
 const { describe, it } = require('node:test');
 
 describe('ecmaVersion option', function () {
+  describe('es2025', function () {
+    it('ImportAttributes', function () {
+      const clone = espurify.customize({ ecmaVersion: 2025 });
+      const code = `
+import foo from "./foo.json" with { type: "json" }
+`;
+      const ast = acorn.parse(code, { locations: true, ranges: true, ecmaVersion: 2025, sourceType: 'module' });
+      const expected = {
+        type: 'Program',
+        body: [
+          {
+            type: 'ImportDeclaration',
+            source: {
+              type: 'Literal',
+              value: './foo.json'
+            },
+            specifiers: [
+              {
+                type: 'ImportDefaultSpecifier',
+                local: {
+                  type: 'Identifier',
+                  name: 'foo'
+                }
+              }
+            ],
+            attributes: [
+              {
+                type: 'ImportAttribute',
+                key: {
+                  type: 'Identifier',
+                  name: 'type'
+                },
+                value: {
+                  type: 'Literal',
+                  value: 'json'
+                }
+              }
+            ]
+          }
+        ],
+        sourceType: 'module'
+      };
+      assert.deepEqual(clone(ast), expected);
+      const clone2024 = espurify.customize({ ecmaVersion: 2024 });
+      assert.notDeepEqual(clone2024(ast), expected);
+    });
+  });
+
   describe('es2022', function () {
     it('PropertyDefinition, PrivateIdentifier and StaticBlock', function () {
       const clone = espurify.customize({ ecmaVersion: 2022 });
