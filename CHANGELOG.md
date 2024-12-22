@@ -1,3 +1,12 @@
+## [3.2.0](https://github.com/estools/espurify/releases/tag/v3.2.0) (2024-12-23)
+
+
+#### Features
+
+* [Support ES2025 grammar](https://github.com/estools/espurify/pull/31)
+* [Change default `ecmaVersion` to `2025`](https://github.com/estools/espurify/pull/32)
+
+
 ## [3.1.0](https://github.com/estools/espurify/releases/tag/v3.1.0) (2024-07-04)
 
 
