@@ -60,5 +60,6 @@
       "/bench/",
       "**/*.jsx"
     ]
-  }
+  },
+  "type": "commonjs"
 }
