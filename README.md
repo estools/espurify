@@ -89,7 +89,7 @@ Configuration options. If not passed, default options will be used.
 
 | type                 | default value |
 |:---------------------|:--------------|
-| `string` or `number` | `2022`        |
+| `string` or `number` | `2025`        |
 
 Indicates the ECMAScript version to clone. Must be either 5, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025.
 
